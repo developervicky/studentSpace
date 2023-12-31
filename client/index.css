@@ -5,6 +5,43 @@
 @layer base {
   html {
     font-family: system-ui, sans-serif;
-    background-color: #1e1f1f;
+  }
+  body {
+    background-image: url("./src/images/signbg.png");
+  }
+  #agree {
+    accent-color: #1a653e;
+    width: 20px;
+    height: 20px;
+  }
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+  .custom-select {
+    position: relative;
+  }
+  .custom-select::before,
+  .custom-select::after {
+    --size: 0.4rem;
+    position: absolute;
+    content: "";
+    right: 1.2rem;
+    pointer-events: none;
+  }
+
+  .custom-select::before {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-bottom: var(--size) solid rgb(255, 255, 255);
+    top: 33%;
+  }
+
+  .custom-select::after {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-top: var(--size) solid rgb(255, 255, 255);
+    top: 55%;
   }
 }
