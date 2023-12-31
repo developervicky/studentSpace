@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
+import logo from "../images/bg.png";
 
 export default function SignupPage() {
   useEffect(() => {
@@ -7,7 +8,9 @@ export default function SignupPage() {
   }, []);
   return (
     <>
-      <div className="">SignupPage hello</div>
+      <div className="">
+        <div className="bg-primary"> hello</div>
+      </div>
     </>
   );
 }
