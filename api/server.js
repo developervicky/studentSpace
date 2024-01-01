@@ -137,13 +137,21 @@ app.post("/signin", async (req, res) => {
     res.status(422);
   }
 });
-// jwt.sign(
-//   { id: userData._id, fname: userData.fname, email: userData.email },
-//   jwtSecret,
-//   {},
-//   (err, token) => {
-//     if (err) throw err;
-//   }
-// );
+
+app.get("/userData", (req, res) => {
+  const { token } = req.cookies;
+  if (token) {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+      res.json(userData);
+    });
+  } else {
+    res.json(null);
+  }
+});
 
 app.listen(5000);

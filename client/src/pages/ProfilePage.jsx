@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../components/UserContext";
 
 export default function ProfilePage() {
-  return <div>ProfilePage</div>;
+  const { user } = useContext(UserContext);
+
+  return <div>{user.fname}</div>;
 }

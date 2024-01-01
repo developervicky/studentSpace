@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import student from "../images/studentvector.png";
 import { Toastify } from "../common/toastify";
+import { Navigate } from "react-router-dom";
 
 export default function SigninPage() {
   const [credentials, setCredentials] = useState({ email: "", pwd: "" });
+  const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate();
 
   const signin = async (e) => {
@@ -14,11 +16,16 @@ export default function SigninPage() {
     try {
       const { data } = await axios.post("/signin", credentials);
       Toastify("success", `${data}`);
+      setRedirect(true);
       // Toastify("success", `${data}`);
     } catch (error) {
       Toastify("fail", `${error.response.data}`);
     }
   };
+
+  if (redirect) {
+    return <Navigate to={"/profile"} />;
+  }
 
   console.log(credentials);
   return (
