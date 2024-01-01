@@ -1,19 +1,26 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import student from "../images/studentvector.png";
 
 export default function SignupPage() {
+  const [credentials, setCredentials] = useState({ accType: "student" });
   const navigate = useNavigate();
-  useEffect(() => {
-    axios.get("/signup");
-  }, []);
 
+  const registerUser = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/signup", credentials);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(credentials);
   return (
     <>
-      <div className="bg-primary flex  flex-row">
-        <div className="  mobile:w-3/5 flex h-screen w-full grow flex-col justify-center px-10  py-7 text-white md:w-4/5 md:px-20 lg:!w-4/5 xl:!w-3/5 ">
+      <div className="flex flex-row  bg-primary">
+        <div className="  flex h-screen w-full grow flex-col justify-center px-10 py-7  text-white md:w-4/5 md:px-20 lg:!w-4/5 xl:!w-3/5 mobile:w-3/5 ">
           <h1 className="py-2 text-2xl font-bold tracking-widest md:text-3xl">
             studentSpace
           </h1>
@@ -28,46 +35,57 @@ export default function SignupPage() {
               Enter your credentials to access your account
             </p>
           </div>
-          <form className="flex flex-col gap-5 md:gap-6 ">
+          <form
+            onSubmit={registerUser}
+            className="flex flex-col gap-5 md:gap-6 "
+          >
             <input
               type="text"
-              placeholder="First Name"
-              className="bg-gray1 rounded-xl px-2 py-3 pl-4  tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
-              // onChange={}
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              className="bg-gray1 rounded-xl px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
-              // onChange={}
+              placeholder="Full Name"
+              className="rounded-xl bg-gray1 px-2 py-3 pl-4  tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
+              onChange={(e) => {
+                setCredentials({ ...credentials, fname: e.target.value });
+              }}
             />
             <input
               type="email"
               id="email"
-              className=" bg-gray1 rounded-xl px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
+              className=" rounded-xl bg-gray1 px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
               placeholder="Email address (only school ID’s)"
-              // onChange={}
+              onChange={(e) => {
+                setCredentials({ ...credentials, email: e.target.value });
+              }}
             />
             <input
               type="password"
               id="pwd"
-              className=" bg-gray1 rounded-xl px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
+              className=" rounded-xl bg-gray1 px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
               placeholder="Password (min 8 chars)"
-              // onChange={}
+              onChange={(e) => {
+                setCredentials({ ...credentials, pwd: e.target.value });
+              }}
             />
             <div className="custom-select">
               <select
                 id="accountype"
-                className=" bg-gray1 w-full rounded-xl px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium "
-                // onChange={}
+                className=" w-full rounded-xl bg-gray1 px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium "
+                onChange={(e) => {
+                  setCredentials({ ...credentials, accType: e.target.value });
+                }}
               >
-                <option value="student">Student</option>
-                <option value="faculty">Faculty</option>
-                <option value="univ">University</option>
+                <option value="Student">Student</option>
+                <option value="Faculty">Faculty</option>
+                <option value="University">University</option>
               </select>
             </div>
             <div className="flex items-center gap-4">
-              <input type="checkbox" id="agree" />
+              <input
+                type="checkbox"
+                id="agree"
+                onChange={(e) => {
+                  setCredentials({ ...credentials, agreed: e.target.checked });
+                }}
+              />
               <label
                 htmlFor="agree"
                 className="text-xs tracking-wide md:text-base"
@@ -78,8 +96,7 @@ export default function SignupPage() {
             <div className=" flex items-center gap-3">
               <button
                 type="submit"
-                className="bg-primary2  hover:bg-primary3 w-full rounded-xl px-2 py-3 pl-4 text-lg font-medium tracking-wide md:py-4 md:pl-6"
-                onClick={""}
+                className="w-full  rounded-xl bg-primary2 px-2 py-3 pl-4 text-lg font-medium tracking-wide hover:bg-primary3 md:py-4 md:pl-6"
               >
                 Signup
               </button>
@@ -98,7 +115,7 @@ export default function SignupPage() {
             </p>
           </form>
         </div>
-        <div className="lg:bg-primary2 hidden  text-white lg:mx-10 lg:my-6 lg:flex lg:h-[800px] lg:w-full lg:flex-col  lg:justify-around lg:rounded-[70px]">
+        <div className="hidden text-white  lg:mx-10 lg:my-6 lg:flex lg:h-[800px] lg:w-full lg:flex-col lg:justify-around  lg:rounded-[70px] lg:bg-primary2">
           <h2 className="mx-auto px-10 text-2xl tracking-widest xl:mt-10">
             The one place for students <br /> to halt for any info
           </h2>
