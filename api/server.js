@@ -106,7 +106,7 @@ app.post("/signin", async (req, res) => {
             {},
             (err, token) => {
               if (err) throw err;
-              res.cookie("token", token).send("Successful Login!");
+              res.cookie("token", token).json(userData);
             }
           );
         } else if (!userData.verified) {
@@ -157,4 +157,31 @@ app.get("/userData", (req, res) => {
   }
 });
 
+app.get("/api/:id/verify/:token", async (req, res) => {
+  try {
+    let StudentUser = await Student.findOne({ _id: req.params.id });
+    let FacultyUser = await Faculty.findOne({ _id: req.params.id });
+    let UniversityUser = await University.findOne({ _id: req.params.id });
+    const User = StudentUser || FacultyUser || UniversityUser;
+    if (!User) {
+      return res.status(400).send("User not Existing");
+    }
+    const token = await Token.findOne({
+      userId: User._id,
+      token: req.params.token,
+    });
+    if (!token) {
+      return res.status(400).send("Link was Expired/Wrong");
+    }
+
+    await Student.updateOne({ _id: token.userId }, { verified: true });
+    await Faculty.updateOne({ _id: token.userId }, { verified: true });
+    await University.updateOne({ _id: token.userId }, { verified: true });
+    console.log(User);
+    res.status(200).send("Email verified successfully");
+    // token.remove();
+  } catch (error) {
+    res.send(error);
+  }
+});
 app.listen(5000);

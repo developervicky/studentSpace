@@ -1,21 +1,25 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import student from "../images/studentvector.png";
 import { Toastify } from "../common/toastify";
 import { Navigate } from "react-router-dom";
+import { UserContext } from "../components/UserContext";
 
 export default function SigninPage() {
   const [credentials, setCredentials] = useState({ email: "", pwd: "" });
   const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate();
 
+  const { setUser } = useContext(UserContext);
+
   const signin = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post("/signin", credentials);
-      Toastify("success", `${data}`);
+      setUser(data);
+      Toastify("success", "Successful Login!");
       setRedirect(true);
       // Toastify("success", `${data}`);
     } catch (error) {
