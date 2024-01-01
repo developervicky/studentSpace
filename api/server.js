@@ -43,47 +43,50 @@ app.post("/signup", async (req, res) => {
     if (agreed == false) {
       return res.status(400).send("Agree the terms and condition");
     }
+    const emailSlice = email.split("@");
 
-    let dbCreate = Student;
-    if (accType == "Faculty") {
-      dbCreate = Faculty;
+    if (emailSlice[1].endsWith("edu.in" || "ac.in")) {
+      let dbCreate = Student;
+      if (accType == "Faculty") {
+        dbCreate = Faculty;
+      }
+      if (accType == "University") {
+        dbCreate = University;
+      }
+
+      let StudentUser = await Student.findOne({ email });
+      let FacultyUser = await Faculty.findOne({ email });
+      let UniversityUser = await University.findOne({ email });
+      if (StudentUser || FacultyUser || UniversityUser)
+        return res.status(400).send("User already registered.");
+
+      const userData = await dbCreate.create({
+        fname,
+        email,
+        agreed,
+        accType,
+        pwd: bcrypt.hashSync(pwd, bcryptSalt),
+      });
+
+      const verifToken = await new Token({
+        userId: userData._id,
+        token: crypto.randomBytes(32).toString("hex"),
+      }).save();
+      const url = `${process.env.BASE_URL}users/${userData._id}/verify/${verifToken.token}`;
+      // console.log(userData.email, url);
+      await sendEmail(
+        userData.email,
+        "Verify Email - studentSpace",
+        url,
+        userData.fname
+      );
+      res.send("Email Sent - Verify it!");
+    } else {
+      res.status("400").send("School ID's only!");
     }
-    if (accType == "University") {
-      dbCreate = University;
-    }
-
-    let StudentUser = await Student.findOne({ email });
-    let FacultyUser = await Faculty.findOne({ email });
-    let UniversityUser = await University.findOne({ email });
-    if (StudentUser || FacultyUser || UniversityUser)
-      return res.status(400).send("User already registered.");
-
-    const userData = await dbCreate.create({
-      fname,
-      email,
-      agreed,
-      accType,
-      pwd: bcrypt.hashSync(pwd, bcryptSalt),
-    });
-
-    const verifToken = await new Token({
-      userId: userData._id,
-      token: crypto.randomBytes(32).toString("hex"),
-    }).save();
-    const url = `${process.env.BASE_URL}users/${userData._id}/verify/${verifToken.token}`;
-    // console.log(userData.email, url);
-    await sendEmail(
-      userData.email,
-      "Verify Email - studentSpace",
-      url,
-      userData.fname
-    );
-    res.send("Email Sent - Verify it!");
   } catch (e) {
     res.status(422);
   }
-
-  // res.send(" signup success");
 });
 
 app.post("/signin", async (req, res) => {
