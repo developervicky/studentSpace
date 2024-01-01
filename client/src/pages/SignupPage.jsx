@@ -3,20 +3,38 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import student from "../images/studentvector.png";
+import { Toastify } from "../common/toastify";
 
 export default function SignupPage() {
-  const [credentials, setCredentials] = useState({ accType: "student" });
+  const [credentials, setCredentials] = useState({
+    fname: "",
+    email: "",
+    pwd: "",
+    accType: "student",
+    agreed: false,
+  });
   const navigate = useNavigate();
 
   const registerUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/signup", credentials);
+      const { data } = await axios.post("/signup", credentials);
+      // Toastify()
+      Toastify("success", `${data}`);
+      console.log(data);
+      setCredentials({
+        accType: "student",
+        fname: "",
+        email: "",
+        pwd: "",
+        agreed: false,
+      });
     } catch (error) {
-      console.log(error);
+      Toastify("fail", `${error.response.data}`);
+      console.log(error.response.data);
     }
   };
-  console.log(credentials);
+
   return (
     <>
       <div className="flex flex-row  bg-primary">
@@ -42,6 +60,7 @@ export default function SignupPage() {
             <input
               type="text"
               placeholder="Full Name"
+              value={credentials.fname}
               className="rounded-xl bg-gray1 px-2 py-3 pl-4  tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
               onChange={(e) => {
                 setCredentials({ ...credentials, fname: e.target.value });
@@ -50,6 +69,7 @@ export default function SignupPage() {
             <input
               type="email"
               id="email"
+              value={credentials.email}
               className=" rounded-xl bg-gray1 px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
               placeholder="Email address (only school ID’s)"
               onChange={(e) => {
@@ -59,6 +79,7 @@ export default function SignupPage() {
             <input
               type="password"
               id="pwd"
+              value={credentials.pwd}
               className=" rounded-xl bg-gray1 px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
               placeholder="Password (min 8 chars)"
               onChange={(e) => {
@@ -82,6 +103,7 @@ export default function SignupPage() {
               <input
                 type="checkbox"
                 id="agree"
+                value={credentials.agreed}
                 onChange={(e) => {
                   setCredentials({ ...credentials, agreed: e.target.checked });
                 }}

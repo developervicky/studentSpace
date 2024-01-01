@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
+const cookieParser = require("cookie-parser");
 
 const Student = require("./model/Student");
 const Faculty = require("./model/Faculty");
@@ -13,6 +14,7 @@ const Token = require("./model/Token");
 const sendEmail = require("./utils/sendEmail.js");
 
 require("dotenv").config();
+app.use(cookieParser());
 
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = "gbfuiejwsdhujhsrkbdhuikdf";
@@ -35,11 +37,11 @@ app.get("/", (req, res) => {
 app.post("/signup", async (req, res) => {
   try {
     const { fname, email, pwd, agreed, accType } = req.body;
-    if (agreed == false) {
-      return res.status(400).send("Agree the terms and condition");
-    }
     if (!fname || !email || !pwd || !accType) {
       return res.status(400).send("Fill the Form");
+    }
+    if (agreed == false) {
+      return res.status(400).send("Agree the terms and condition");
     }
 
     let dbCreate = Student;
@@ -50,8 +52,11 @@ app.post("/signup", async (req, res) => {
       dbCreate = University;
     }
 
-    let user = await dbCreate.findOne({ email });
-    if (user) return res.status(400).send("User already registered.");
+    let StudentUser = await Student.findOne({ email });
+    let FacultyUser = await Faculty.findOne({ email });
+    let UniversityUser = await University.findOne({ email });
+    if (StudentUser || FacultyUser || UniversityUser)
+      return res.status(400).send("User already registered.");
 
     const userData = await dbCreate.create({
       fname,
@@ -60,15 +65,6 @@ app.post("/signup", async (req, res) => {
       accType,
       pwd: bcrypt.hashSync(pwd, bcryptSalt),
     });
-
-    jwt.sign(
-      { id: userData._id, fname: userData.fname, email: userData.email },
-      jwtSecret,
-      {},
-      (err, token) => {
-        if (err) throw err;
-      }
-    );
 
     const verifToken = await new Token({
       userId: userData._id,
@@ -82,12 +78,72 @@ app.post("/signup", async (req, res) => {
       url,
       userData.fname
     );
-    res.json({ message: "Verify the Email" });
+    res.send("Email Sent - Verify it!");
   } catch (e) {
     res.status(422);
   }
 
   // res.send(" signup success");
 });
+
+app.post("/signin", async (req, res) => {
+  const { email, pwd } = req.body;
+  try {
+    let StudentUser = await Student.findOne({ email });
+    let FacultyUser = await Faculty.findOne({ email });
+    let UniversityUser = await University.findOne({ email });
+    const userData = StudentUser || FacultyUser || UniversityUser;
+    if (userData) {
+      const passOk = bcrypt.compareSync(pwd, userData.pwd);
+      if (passOk) {
+        if (userData.verified) {
+          jwt.sign(
+            { email: userData.email, id: userData._id },
+            jwtSecret,
+            {},
+            (err, token) => {
+              if (err) throw err;
+              res.cookie("token", token).send("Successful Login!");
+            }
+          );
+        } else if (!userData.verified) {
+          const token = await Token.findOne({
+            userId: userData._id,
+          });
+          if (token) {
+            res.status(400).send("Check Your Email and Vaildate the Account");
+          } else if (!token) {
+            const verifToken = await new Token({
+              userId: userData._id,
+              token: crypto.randomBytes(32).toString("hex"),
+            }).save();
+            const url = `${process.env.BASE_URL}users/${userData._id}/verify/${verifToken.token}`;
+            await sendEmail(
+              userData.email,
+              "Verify Email - studentSpace",
+              url,
+              userData.fname
+            );
+            res.status(400).send("Email sent again");
+          }
+        }
+      } else {
+        res.status(400).send("Password wrong!");
+      }
+    } else {
+      res.status(400).send("Email doesn't exist");
+    }
+  } catch (err) {
+    res.status(422);
+  }
+});
+// jwt.sign(
+//   { id: userData._id, fname: userData.fname, email: userData.email },
+//   jwtSecret,
+//   {},
+//   (err, token) => {
+//     if (err) throw err;
+//   }
+// );
 
 app.listen(5000);

@@ -1,19 +1,30 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import student from "../images/studentvector.png";
+import { Toastify } from "../common/toastify";
 
 export default function SigninPage() {
+  const [credentials, setCredentials] = useState({ email: "", pwd: "" });
   const navigate = useNavigate();
-  useEffect(() => {
-    axios.get("/signup");
-  }, []);
 
+  const signin = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post("/signin", credentials);
+      Toastify("success", `${data}`);
+      // Toastify("success", `${data}`);
+    } catch (error) {
+      Toastify("fail", `${error.response.data}`);
+    }
+  };
+
+  console.log(credentials);
   return (
     <>
-      <div className="bg-primary flex  flex-row">
-        <div className="  mobile:w-3/5 flex h-screen w-full grow flex-col justify-center px-10  py-7 text-white md:w-4/5 md:px-20 lg:!w-4/5 xl:!w-3/5 ">
+      <div className="flex flex-row  bg-primary">
+        <div className="  flex h-screen w-full grow flex-col justify-center px-10 py-7  text-white md:w-4/5 md:px-20 lg:!w-4/5 xl:!w-3/5 mobile:w-3/5 ">
           <h1 className="py-2 text-2xl font-bold tracking-widest md:text-3xl">
             studentSpace
           </h1>
@@ -28,26 +39,31 @@ export default function SigninPage() {
               Enter your credentials to access your account
             </p>
           </div>
-          <form className="flex flex-col gap-5 md:gap-6 ">
+          <form onSubmit={signin} className="flex flex-col gap-5 md:gap-6 ">
             <input
               type="email"
               id="email"
-              className=" bg-gray1 rounded-xl px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
+              value={credentials.email}
+              className=" rounded-xl bg-gray1 px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
               placeholder="Email address (only school ID’s)"
-              // onChange={}
+              onChange={(e) => {
+                setCredentials({ ...credentials, email: e.target.value });
+              }}
             />
             <input
               type="password"
+              value={credentials.pwd}
               id="pwd"
-              className=" bg-gray1 rounded-xl px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
+              className=" rounded-xl bg-gray1 px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
               placeholder="Password (min 8 chars)"
-              // onChange={}
+              onChange={(e) => {
+                setCredentials({ ...credentials, pwd: e.target.value });
+              }}
             />
             <div className=" flex items-center gap-3">
               <button
                 type="submit"
-                className="bg-primary2  hover:bg-primary3 w-full rounded-xl px-2 py-3 pl-4 text-lg font-medium tracking-wide md:py-4 md:pl-6"
-                onClick={""}
+                className="w-full  rounded-xl bg-primary2 px-2 py-3 pl-4 text-lg font-medium tracking-wide hover:bg-primary3 md:py-4 md:pl-6"
               >
                 Signin
               </button>
@@ -66,7 +82,7 @@ export default function SigninPage() {
             </p>
           </form>
         </div>
-        <div className="lg:bg-primary2 hidden  text-white lg:mx-10 lg:my-6 lg:flex lg:h-[800px] lg:w-full lg:flex-col  lg:justify-around lg:rounded-[70px]">
+        <div className="hidden text-white  lg:mx-10 lg:my-6 lg:flex lg:h-[800px] lg:w-full lg:flex-col lg:justify-around  lg:rounded-[70px] lg:bg-primary2">
           <h2 className="mx-auto px-10 text-2xl tracking-widest xl:mt-10">
             The one place for students <br /> to halt for any info
           </h2>
