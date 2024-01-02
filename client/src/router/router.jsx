@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import SignupPage from "../pages/SignupPage";
 import SigninPage from "../pages/SigninPage";
 import ProfilePage from "../pages/ProfilePage";
+import UniversityPage from "../pages/UniversityPage";
 import axios from "axios";
 import EmailVerify from "../components/EmailVerify";
 import Layout from "../layout/Layout";
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "profile/",
         element: <ProfilePage />,
+      },
+      {
+        path: "university/",
+        element: <UniversityPage />,
       },
     ],
   },

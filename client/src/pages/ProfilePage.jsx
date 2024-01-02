@@ -8,7 +8,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <div>{user?.fname}</div>
+      <div className="w-full">{user?.fname}</div>
     </>
   );
 }

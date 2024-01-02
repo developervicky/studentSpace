@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import Leftbar from "../common/Leftbar/Leftbar";
-import Rightbar from "../common/Rightbar";
+import Rightbar from "../common/Rightbar/Rightbar";
 import { useContext } from "react";
 import { UserContext } from "../components/UserContext";
 import LoadingPage from "../pages/LoadingPage";
@@ -15,7 +15,7 @@ export default function Layout() {
   }
 
   return (
-    <div className="flex gap-5">
+    <div className="flex gap-5 justify-between">
       <Leftbar />
       <Outlet />
       <Rightbar />
