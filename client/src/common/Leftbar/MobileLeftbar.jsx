@@ -10,7 +10,6 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Alert,
   Input,
   Drawer,
   Card,
@@ -26,212 +25,85 @@ import {
 import {
   ChevronRightIcon,
   ChevronDownIcon,
-  CubeTransparentIcon,
   MagnifyingGlassIcon,
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
-export default function MobileLeftbar() {
-  const [open, setOpen] = useState(0);
-  const [openAlert, setOpenAlert] = useState(true);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+import { Link } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
+import { LiaUniversitySolid } from "react-icons/lia";
+import { LuNewspaper, LuLogOut } from "react-icons/lu";
+import { MdOutlineFeed } from "react-icons/md";
+import { FaPeopleGroup } from "react-icons/fa6";
+import { IoSettingsOutline } from "react-icons/io5";
 
-  const handleOpen = (value) => {
-    setOpen(open === value ? 0 : value);
-  };
+export default function MobileLeftbar() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
 
   return (
     <>
-      <IconButton variant="text" size="lg" onClick={openDrawer}>
+      <IconButton variant="text" size="lg" onClick={openDrawer} className="m-4">
         {isDrawerOpen ? (
           <XMarkIcon className="h-8 w-8 stroke-2 text-white" />
         ) : (
           <Bars3Icon className="h-8 w-8 stroke-2 text-white" />
         )}
       </IconButton>
-      <Drawer open={isDrawerOpen} onClose={closeDrawer}>
+      <Drawer
+        className="bg-primary5 border-primary5 rounded-r-[30px]"
+        open={isDrawerOpen}
+        onClose={closeDrawer}
+      >
         <Card
           color="transparent"
           shadow={false}
-          className="h-[calc(100vh-2rem)] w-full p-4"
+          className="flex h-screen w-full flex-col justify-around p-4"
         >
           <div className="mb-2 flex items-center gap-4 p-4">
-            <img
-              src="https://docs.material-tailwind.com/img/logo-ct-dark.png"
-              alt="brand"
-              className="h-8 w-8"
-            />
-            <Typography variant="h5" color="blue-gray">
-              Sidebar
-            </Typography>
+            <h1 className="flex text-[1.77rem] font-bold tracking-widest text-white">
+              studentSpace
+            </h1>
           </div>
-          <div className="p-2">
-            <Input
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              label="Search"
-            />
-          </div>
+
           <List>
-            <Accordion
-              open={open === 1}
-              icon={
-                <ChevronDownIcon
-                  strokeWidth={2.5}
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    open === 1 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem className="p-0" selected={open === 1}>
-                <AccordionHeader
-                  onClick={() => handleOpen(1)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <PresentationChartBarIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    Dashboard
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Analytics
-                  </ListItem>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Reporting
-                  </ListItem>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Projects
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <Accordion
-              open={open === 2}
-              icon={
-                <ChevronDownIcon
-                  strokeWidth={2.5}
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    open === 2 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem className="p-0" selected={open === 2}>
-                <AccordionHeader
-                  onClick={() => handleOpen(2)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <ShoppingBagIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    E-Commerce
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Orders
-                  </ListItem>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Products
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <hr className="my-2 border-blue-gray-50" />
-            <ListItem>
-              <ListItemPrefix>
-                <InboxIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Inbox
-              <ListItemSuffix>
-                <Chip
-                  value="14"
-                  size="sm"
-                  variant="ghost"
-                  color="blue-gray"
-                  className="rounded-full"
-                />
-              </ListItemSuffix>
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <UserCircleIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Profile
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <Cog6ToothIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Settings
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <PowerIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Log Out
-            </ListItem>
-          </List>
-          <Alert
-            open={openAlert}
-            className="mt-auto"
-            onClose={() => setOpenAlert(false)}
-          >
-            <CubeTransparentIcon className="mb-4 h-12 w-12" />
-            <Typography variant="h6" className="mb-1">
-              Upgrade to PRO
-            </Typography>
-            <Typography variant="small" className="font-normal opacity-80">
-              Upgrade to Material Tailwind PRO and get even more components,
-              plugins, advanced features and premium.
-            </Typography>
-            <div className="mt-4 flex gap-3">
-              <Typography
-                as="a"
-                href="#"
-                variant="small"
-                className="font-medium opacity-80"
-                onClick={() => setOpenAlert(false)}
-              >
-                Dismiss
-              </Typography>
-              <Typography
-                as="a"
-                href="#"
-                variant="small"
-                className="font-medium"
-              >
-                Upgrade Now
-              </Typography>
+            <div className="flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl  tracking-wider text-white  hover:bg-primary ">
+              <FaUserCircle className="text-2xl" />
+              <Link>Profile</Link>
             </div>
-          </Alert>
+            <div className="flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl tracking-wider text-white  hover:bg-primary ">
+              <LiaUniversitySolid className="text-2xl" />
+              <Link>University</Link>
+            </div>
+            <div className="flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl tracking-wider text-white  hover:bg-primary ">
+              <MdOutlineFeed className="text-2xl" />
+              <Link>Feed/Forum</Link>
+            </div>
+            <div className="flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl tracking-wider text-white  hover:bg-primary ">
+              <LuNewspaper className="text-2xl" />
+              <Link>Blog</Link>
+            </div>
+            <div className="flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl tracking-wider text-white  hover:bg-primary ">
+              <FaPeopleGroup className="text-lg" />
+              <Link>Community</Link>
+            </div>
+          </List>
+
+          <hr className="my-2 border-blue-gray-50" />
+
+          <List>
+            <div className="flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl  tracking-wider text-white  hover:bg-primary ">
+              <IoSettingsOutline className="text-2xl" />
+              <Link>Settings</Link>
+            </div>
+            <div className="flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl  tracking-wider text-white  hover:bg-primary ">
+              <LuLogOut className="text-2xl" />
+              <Link>Logout</Link>
+            </div>
+          </List>
         </Card>
       </Drawer>
     </>
