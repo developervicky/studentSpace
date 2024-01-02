@@ -6,6 +6,7 @@ import UniversityPage from "../pages/UniversityPage";
 import axios from "axios";
 import EmailVerify from "../components/EmailVerify";
 import Layout from "../layout/Layout";
+import UserLayout from "../layout/UserLayout";
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 axios.defaults.withCredentials = true;
@@ -28,12 +29,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "profile/",
-        element: <ProfilePage />,
-      },
-      {
-        path: "university/",
-        element: <UniversityPage />,
+        path: ":subpage/",
+        element: <UserLayout />,
       },
     ],
   },
