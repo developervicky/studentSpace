@@ -36,10 +36,17 @@ app.get("/", (req, res) => {
 
 app.post("/signup", async (req, res) => {
   try {
-    const { fname, email, pwd, agreed, accType } = req.body;
-    if (!fname || !email || !pwd || !accType) {
+    const { fname, email, pwd, agreed, accType, userName } = req.body;
+    if (!fname || !email || !pwd || !accType || !userName) {
       return res.status(400).send("Fill the Form");
     }
+
+    let StudentUser = await Student.findOne({ userName });
+    let FacultyUser = await Faculty.findOne({ userName });
+    let UniversityUser = await University.findOne({ userName });
+    if (StudentUser || FacultyUser || UniversityUser)
+      return res.status(400).send("Username already taken !");
+
     if (agreed == false) {
       return res.status(400).send("Agree the terms and condition");
     }
@@ -62,6 +69,7 @@ app.post("/signup", async (req, res) => {
 
       const userData = await dbCreate.create({
         fname,
+        userName,
         email,
         agreed,
         accType,
@@ -90,11 +98,12 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post("/signin", async (req, res) => {
-  const { email, pwd } = req.body;
+  const { userName, pwd } = req.body;
+
   try {
-    let StudentUser = await Student.findOne({ email });
-    let FacultyUser = await Faculty.findOne({ email });
-    let UniversityUser = await University.findOne({ email });
+    let StudentUser = await Student.findOne({ userName });
+    let FacultyUser = await Faculty.findOne({ userName });
+    let UniversityUser = await University.findOne({ userName });
     const userData = StudentUser || FacultyUser || UniversityUser;
     if (userData) {
       const passOk = bcrypt.compareSync(pwd, userData.pwd);

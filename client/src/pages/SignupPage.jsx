@@ -14,6 +14,7 @@ export default function SignupPage() {
     pwd: "",
     accType: "student",
     agreed: false,
+    userName: "",
   });
   const navigate = useNavigate();
   const { user, ready } = useContext(UserContext);
@@ -37,12 +38,14 @@ export default function SignupPage() {
         email: "",
         pwd: "",
         agreed: false,
+        userName: "",
       });
     } catch (error) {
       Toastify("fail", `${error.response.data}`);
       console.log(error.response.data);
     }
   };
+  console.log(credentials);
 
   return (
     <>
@@ -73,6 +76,15 @@ export default function SignupPage() {
               className="rounded-xl bg-gray1 px-2 py-3 pl-4  tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
               onChange={(e) => {
                 setCredentials({ ...credentials, fname: e.target.value });
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Username"
+              value={credentials.userName}
+              className="rounded-xl bg-gray1 px-2 py-3 pl-4  tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
+              onChange={(e) => {
+                setCredentials({ ...credentials, userName: e.target.value });
               }}
             />
             <input

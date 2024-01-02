@@ -9,7 +9,7 @@ import { UserContext } from "../components/UserContext";
 import LoadingPage from "./LoadingPage";
 
 export default function SigninPage() {
-  const [credentials, setCredentials] = useState({ email: "", pwd: "" });
+  const [credentials, setCredentials] = useState({ userName: "", pwd: "" });
   const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate();
 
@@ -60,13 +60,13 @@ export default function SigninPage() {
           </div>
           <form onSubmit={signin} className="flex flex-col gap-5 md:gap-6 ">
             <input
-              type="email"
-              id="email"
-              value={credentials.email}
+              type="text"
+              id="userName"
+              value={credentials.userName}
               className=" rounded-xl bg-gray1 px-2 py-3 pl-4 tracking-wide md:py-4 md:pl-6 md:text-lg md:font-medium"
-              placeholder="Email address (only school ID’s)"
+              placeholder="Username"
               onChange={(e) => {
-                setCredentials({ ...credentials, email: e.target.value });
+                setCredentials({ ...credentials, userName: e.target.value });
               }}
             />
             <input

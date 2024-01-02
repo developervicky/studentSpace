@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const FacultySchema = new Schema({
   fname: { type: String, required: true },
   email: { type: String, required: true },
+  userName: { type: String, required: true },
   pwd: { type: String, required: true },
   agreed: { type: Boolean, required: true },
   accType: { type: String, required: true },
@@ -13,6 +14,27 @@ const FacultySchema = new Schema({
     {
       description: { type: String },
       photos: [String],
+    },
+  ],
+  connections: { type: Number },
+  bio: { type: String },
+  education: [
+    {
+      uniName: { type: String },
+      startedYear: { type: Number },
+      endedYear: { type: Number },
+    },
+  ],
+  city: { type: String },
+  state: { type: String },
+  country: { type: String },
+  experience: [
+    {
+      compName: { type: String },
+      startedYear: { type: String },
+      endedYear: { type: String },
+      desc: { type: String },
+      link: [{ type: String }],
     },
   ],
 });
