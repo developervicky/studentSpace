@@ -1,9 +1,11 @@
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import student from "../images/studentvector.png";
 import { Toastify } from "../common/toastify";
+import { UserContext } from "../components/UserContext";
+import LoadingPage from "./LoadingPage";
 
 export default function SignupPage() {
   const [credentials, setCredentials] = useState({
@@ -14,6 +16,13 @@ export default function SignupPage() {
     agreed: false,
   });
   const navigate = useNavigate();
+  const { user, ready } = useContext(UserContext);
+  if (user) {
+    return <Navigate to={"/user/profile"} />;
+  }
+  if (!ready) {
+    return <LoadingPage />;
+  }
 
   const registerUser = async (e) => {
     e.preventDefault();

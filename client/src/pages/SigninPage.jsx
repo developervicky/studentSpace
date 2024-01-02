@@ -6,13 +6,21 @@ import student from "../images/studentvector.png";
 import { Toastify } from "../common/toastify";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../components/UserContext";
+import LoadingPage from "./LoadingPage";
 
 export default function SigninPage() {
   const [credentials, setCredentials] = useState({ email: "", pwd: "" });
   const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate();
 
-  const { setUser } = useContext(UserContext);
+  const { setUser, user, ready } = useContext(UserContext);
+  if (user) {
+    return <Navigate to={"/user/profile"} />;
+  }
+
+  if (!ready) {
+    return <LoadingPage />;
+  }
 
   const signin = async (e) => {
     e.preventDefault();
@@ -28,7 +36,7 @@ export default function SigninPage() {
   };
 
   if (redirect) {
-    return <Navigate to={"/profile"} />;
+    return <Navigate to={"/user/profile"} />;
   }
 
   console.log(credentials);

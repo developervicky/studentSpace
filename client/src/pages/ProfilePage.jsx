@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { UserContext } from "../components/UserContext";
 import { Navigate } from "react-router-dom";
+import LoadingPage from "./LoadingPage";
 
 export default function ProfilePage() {
   const { user } = useContext(UserContext);
-  if(!user) {
-    return <Navigate to={"/"} />
-  }
 
-  return <div>{user?.fname}</div>;
+  return (
+    <>
+      <div>{user?.fname}</div>
+    </>
+  );
 }
