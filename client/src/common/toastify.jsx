@@ -10,7 +10,7 @@ export const Toastify = (mode, msg) => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      bodyClassName: "toastBody",
     });
   } else if (mode === "fail") {
     toast.error(`${msg}`, {
@@ -22,6 +22,7 @@ export const Toastify = (mode, msg) => {
       draggable: true,
       progress: undefined,
       theme: "dark",
+      bodyClassName: "toastBody",
     });
   }
 };

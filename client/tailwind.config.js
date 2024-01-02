@@ -10,6 +10,7 @@ export default withMT({
         primary2: "#1a653e",
         primary3: "#28925b",
         primary4: "#1c7341",
+        primary5: "#0A371E",
         gray1: "#111b14",
       },
       screens: {
