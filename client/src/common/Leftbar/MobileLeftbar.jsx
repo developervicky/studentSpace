@@ -9,7 +9,7 @@ import { MdOutlineFeed } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { IoSettingsOutline } from "react-icons/io5";
 
-export default function MobileLeftbar() {
+export default function MobileLeftbar({ logout }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const openDrawer = () => setIsDrawerOpen(true);
@@ -46,9 +46,9 @@ export default function MobileLeftbar() {
           <Link>
             <IoSettingsOutline className="text-2xl text-white" />
           </Link>{" "}
-          <Link>
+          <button onClick={logout}>
             <LuLogOut className="text-2xl text-white" />
-          </Link>
+          </button>
         </div>
       </List>
 
@@ -104,10 +104,13 @@ export default function MobileLeftbar() {
               <IoSettingsOutline className="text-2xl" />
               <p>Settings</p>
             </div>
-            <div className="flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl  tracking-wider text-white  hover:bg-primary ">
+            <button
+              onClick={logout}
+              className="flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl  tracking-wider text-white  hover:bg-primary "
+            >
               <LuLogOut className="text-2xl" />
               <p>Logout</p>
-            </div>
+            </button>
           </List>
         </Card>
       </Drawer>

@@ -184,4 +184,9 @@ app.get("/api/:id/verify/:token", async (req, res) => {
     res.send(error);
   }
 });
+
+app.post("/logout", (req, res) => {
+  res.cookie("token", "").json("Succesful Logout");
+});
+
 app.listen(5000);

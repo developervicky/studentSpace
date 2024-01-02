@@ -6,7 +6,7 @@ import { LuNewspaper, LuLogOut } from "react-icons/lu";
 import { MdOutlineFeed } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 
-export default function DesktopLeftbar() {
+export default function DesktopLeftbar({ logout }) {
   return (
     <div className="bg-primary5 border-primary5  hidden h-screen w-full max-w-[17rem] flex-col justify-around rounded-r-[60px] border-2 px-6 text-white lg:flex">
       <h1 className="flex pt-4 text-[1.77rem] font-bold tracking-widest">
@@ -46,10 +46,13 @@ export default function DesktopLeftbar() {
           <IoSettingsOutline className="text-2xl" />
           <p>Settings</p>
         </Link>
-        <Link className="flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl  tracking-wider text-white  hover:bg-primary ">
+        <button
+          onClick={logout}
+          className="flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl  tracking-wider text-white  hover:bg-primary "
+        >
           <LuLogOut className="text-2xl" />
           <p>Logout</p>
-        </Link>
+        </button>
       </div>
     </div>
   );
