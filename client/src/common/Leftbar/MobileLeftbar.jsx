@@ -17,7 +17,7 @@ export default function MobileLeftbar({ logout }) {
 
   return (
     <>
-      <List className="bg-primary5 flex h-screen min-h-screen min-w-fit flex-col items-center justify-around gap-4 rounded-none">
+      <List className="sticky top-0 bg-primary5 flex h-screen min-h-screen min-w-fit flex-col items-center justify-around gap-4 rounded-none">
         <IconButton variant="text" size="lg" onClick={openDrawer}>
           {isDrawerOpen ? (
             <XMarkIcon className="h-8 w-8 stroke-2 text-white" />

@@ -18,7 +18,7 @@ export default function DesktopLeftbar({ logout }) {
     return classes;
   };
   return (
-    <div className="hidden h-screen  w-full max-w-[17rem] flex-col justify-around rounded-r-[60px] border-2 border-primary5 bg-primary5 px-6 text-white lg:flex">
+    <div className="sticky top-0 hidden h-screen  w-full max-w-[17rem] flex-col justify-around rounded-r-[60px] border-2 border-primary5 bg-primary5 px-6 text-white lg:flex">
       <h1 className="flex pt-4 text-[1.77rem] font-bold tracking-widest">
         studentSpace
       </h1>
