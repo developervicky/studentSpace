@@ -7,6 +7,9 @@ import axios from "axios";
 import EmailVerify from "../components/EmailVerify";
 import Layout from "../layout/Layout";
 import UserLayout from "../layout/UserLayout";
+import ModalLayout from "../layout/ModalLayout";
+import AboutModal from "../components/profile edit/profile modal/AboutModal";
+import EditEducationModal from "../components/profile edit/profile modal/EditEducationModal";
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 axios.defaults.withCredentials = true;
@@ -31,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: ":subpage/",
         element: <UserLayout />,
+      },
+      {
+        path: ":subpage/:action/edit",
+        element: <ModalLayout />,
+      },
+      {
+        path: ":subpage/:action/:id",
+        element: <ModalLayout />,
       },
     ],
   },

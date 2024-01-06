@@ -20,24 +20,34 @@ const StudentSchema = new Schema({
   bio: { type: String },
   education: [
     {
-      uniName: { type: String },
+      name: { type: String },
+      degree: { type: String },
       startedYear: { type: Number },
       endedYear: { type: Number },
+      percentage: { type: Number },
     },
   ],
   city: { type: String },
   state: { type: String },
-  country: {type: String},
-  project: [
+  country: { type: String },
+  projects: [
     {
-      projectName: {type: String},
+      projectName: { type: String },
       startedYear: { type: String },
       endedYear: { type: String },
-      desc: {type: String},
-      link: [{type: String}]
-    }
-  ]
-
+      desc: { type: String },
+      link: [{ type: String }],
+    },
+  ],
+  awards: [
+    {
+      awardName: { type: String },
+      organization: { type: String },
+      year: { type: String },
+      desc: { type: String },
+      link: [{ type: String }],
+    },
+  ],
 });
 
 const StudentModel = mongoose.model("Student", StudentSchema);

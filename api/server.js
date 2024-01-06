@@ -143,7 +143,7 @@ app.post("/signin", async (req, res) => {
         res.status(400).send("Password wrong!");
       }
     } else {
-      res.status(400).send("Email doesn't exist");
+      res.status(400).send("Username doesn't exist");
     }
   } catch (err) {
     res.status(422);
@@ -198,4 +198,103 @@ app.post("/logout", (req, res) => {
   res.cookie("token", "").json("Succesful Logout");
 });
 
+app.post("/infoupdate", async (req, res) => {
+  const { bio } = req.body;
+  const { token } = req.cookies;
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+      userData.set({ bio });
+      await userData.save();
+      // await Student.updateOne({ _id: userData. }, { verified: true });
+      // await Faculty.updateOne({ _id: token.userId }, { verified: true });
+      // await University.updateOne({ _id: token.userId }, { verified: true });
+      res.json("bio updated");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.post("/educreate", async (req, res) => {
+  const { name, degree, startedYear, endedYear, percentage } = req.body;
+  const { token } = req.cookies;
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      let eduCreate = Student;
+      if (userData == FacultyUser) {
+        eduCreate = Faculty;
+      }
+      if (userData == UniversityUser) {
+        eduCreate = University;
+      }
+      await eduCreate.updateOne(
+        { _id: tokenData.id },
+        {
+          $addToSet: {
+            education: {
+              name,
+              degree,
+              startedYear,
+              endedYear,
+              percentage,
+            },
+          },
+        }
+      );
+      res.json("edu create");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.put("/eduupdate", async (req, res) => {
+  const { name, degree, startedYear, endedYear, percentage } = req.body;
+  const { token } = req.cookies;
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      let eduCreate = Student;
+      if (userData == FacultyUser) {
+        eduCreate = Faculty;
+      }
+      if (userData == UniversityUser) {
+        eduCreate = University;
+      }
+      await eduCreate.updateOne(
+        { _id: tokenData.id },
+        {
+          $set: {
+            "education.$": {
+              name,
+              degree,
+              startedYear,
+              endedYear,
+              percentage,
+            },
+          },
+        }
+      );
+      res.json("edu update");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
 app.listen(5000);
