@@ -143,9 +143,9 @@ export default function SignupPage() {
               >
                 Signup
               </button>
-              <button className=" rounded-full border-2 bg-white p-2 text-xl md:text-3xl">
+              {/* <button className=" rounded-full border-2 bg-white p-2 text-xl md:text-3xl">
                 <FcGoogle />
-              </button>
+              </button> */}
             </div>
             <p className=" text-sm tracking-wide md:text-base">
               Have an account?{" "}

@@ -15,7 +15,7 @@ export default function Layout() {
   }
 
   return (
-    <div className="flex gap-5 justify-between">
+    <div className="flex justify-between gap-5">
       <Leftbar />
       <Outlet />
       <Rightbar />
