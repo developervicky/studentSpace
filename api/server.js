@@ -339,4 +339,59 @@ app.delete("/eduDelete/:id", (req, res) => {
     res.send(error);
   }
 });
+
+app.post("/projectCreate", (req, res) => {
+  const { name, startedYear, endedYear, desc } = req.body.project;
+  const link = req.body.link;
+  console.log(
+    link.map((each) => {
+      return {
+        link: each.link,
+        linkName: each.linkName,
+      };
+    })
+  );
+
+  const { token } = req.cookies;
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      let projectCreate = Student;
+      if (userData == FacultyUser) {
+        projectCreate = Faculty;
+      }
+      if (userData == UniversityUser) {
+        projectCreate = University;
+      }
+      await projectCreate.updateOne(
+        { _id: tokenData.id },
+        {
+          $addToSet: {
+            projects: {
+              name,
+              startedYear,
+              endedYear,
+              desc,
+              links: link.map((each) => {
+                return {
+                  link: each.link,
+                  linkName: each.linkName,
+                };
+              }),
+            },
+          },
+        }
+      );
+      res.json("project create");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 app.listen(5000);

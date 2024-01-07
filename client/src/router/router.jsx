@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         element: <UserLayout />,
       },
       {
-        path: ":subpage/:action/edit",
+        path: ":subpage/:action",
         element: <ModalLayout />,
       },
       {

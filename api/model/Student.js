@@ -32,11 +32,16 @@ const StudentSchema = new Schema({
   country: { type: String },
   projects: [
     {
-      projectName: { type: String },
+      name: { type: String },
       startedYear: { type: String },
       endedYear: { type: String },
       desc: { type: String },
-      link: [{ type: String }],
+      links: [
+        {
+          link: { type: String },
+          linkName: { type: String },
+        },
+      ],
     },
   ],
   awards: [

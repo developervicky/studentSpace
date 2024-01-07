@@ -3,9 +3,8 @@ import ProfilePage from "../pages/ProfilePage";
 import UniversityPage from "../pages/UniversityPage";
 
 export default function UserLayout() {
-
   const { subpage } = useParams();
-  console.log(subpage);
+  // console.log(subpage);
   return (
     <>
       {subpage == "profile" && <ProfilePage />}
