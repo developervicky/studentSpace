@@ -16,8 +16,8 @@ export default function AddEducationModal() {
   const bioUpdate = async (e) => {
     e.preventDefault;
     try {
-      await axios.post("/educreate", uni).then(() => {
-        // window.location.href = "/user/profile";
+      await axios.post("/eduCreate", uni).then(() => {
+        window.location.href = "/user/profile";
       });
     } catch (error) {
       console.log(error);

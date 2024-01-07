@@ -198,7 +198,7 @@ app.post("/logout", (req, res) => {
   res.cookie("token", "").json("Succesful Logout");
 });
 
-app.post("/infoupdate", async (req, res) => {
+app.post("/infoUpdate", async (req, res) => {
   const { bio } = req.body;
   const { token } = req.cookies;
   try {
@@ -220,7 +220,7 @@ app.post("/infoupdate", async (req, res) => {
   }
 });
 
-app.post("/educreate", async (req, res) => {
+app.post("/eduCreate", async (req, res) => {
   const { name, degree, startedYear, endedYear, percentage } = req.body;
   const { token } = req.cookies;
   try {
@@ -259,11 +259,10 @@ app.post("/educreate", async (req, res) => {
   }
 });
 
-app.put("/eduupdate/:id", async (req, res) => {
+app.put("/eduUpdate/:id", async (req, res) => {
   const { name, degree, startedYear, endedYear, percentage } = req.body;
   const { token } = req.cookies;
   const { id } = req.params;
-  console.log(id.toString());
   try {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
       if (err) throw err;
@@ -297,12 +296,44 @@ app.put("/eduupdate/:id", async (req, res) => {
           },
         }
       );
-      // console.log(userData.find({ education: { $elemMatch: { name: } } }));
-      // let eduData = eduCreate.find({
-      //   education: { $elemMatch: { name: "srm ktr" } },
-      // });
-      // console.log(eduData);
       res.json("edu update");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.delete("/eduDelete/:id", (req, res) => {
+  const { name, degree, startedYear, endedYear, percentage } = req.body;
+  const { token } = req.cookies;
+  const { id } = req.params;
+
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      let eduCreate = Student;
+      if (userData == FacultyUser) {
+        eduCreate = Faculty;
+      }
+      if (userData == UniversityUser) {
+        eduCreate = University;
+      }
+      await eduCreate.updateOne(
+        { _id: userData._id },
+        {
+          $pull: {
+            education: {
+              _id: id,
+            },
+          },
+        }
+      );
+      res.json("edu delete");
     });
   } catch (error) {
     res.send(error);

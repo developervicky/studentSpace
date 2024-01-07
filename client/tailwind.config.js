@@ -12,6 +12,8 @@ export default withMT({
         primary4: "#1c7341",
         primary5: "#0A371E",
         gray1: "#111b14",
+        caution: "#ad2121",
+        caution2: "#cc2929",
       },
       screens: {
         mobile: "426px",

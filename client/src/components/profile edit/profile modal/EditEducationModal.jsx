@@ -20,8 +20,19 @@ export default function EditEducationModal() {
   const bioUpdate = async (e) => {
     e.preventDefault;
     try {
-      await axios.put(`/eduupdate/${id}`, uni).then(() => {
-        // window.location.href = "/user/profile";
+      await axios.put(`/eduUpdate/${id}`, uni).then(() => {
+        window.location.href = "/user/profile";
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteEdu = async (e) => {
+    e.preventDefault;
+    try {
+      await axios.delete(`/eduDelete/${id}`, uni).then(() => {
+        window.location.href = "/user/profile";
       });
     } catch (error) {
       console.log(error);
@@ -117,21 +128,32 @@ export default function EditEducationModal() {
                 </div>
               </div>
             </div>
-            <div className=" px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-              <button
-                type="button"
-                onClick={bioUpdate}
-                className="inline-flex w-full justify-center rounded-md bg-primary2 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary3 sm:ml-3 sm:w-auto"
-              >
-                Submit
-              </button>
-              <button
-                type="button"
-                onClick={() => navigate(-1)}
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-              >
-                Cancel
-              </button>
+            <div className=" justify-between px-4 py-3 pb-6 sm:flex sm:flex-row-reverse sm:px-6">
+              <div className="flex flex-row-reverse gap-3">
+                <button
+                  type="button"
+                  onClick={bioUpdate}
+                  className="inline-flex w-full justify-center rounded-md bg-primary2 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary3 sm:ml-3 sm:w-auto"
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigate(-1)}
+                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                >
+                  Cancel
+                </button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  onClick={deleteEdu}
+                  className="hover:bg-caution2 bg-caution inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:mr-3 sm:w-auto"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         </div>
