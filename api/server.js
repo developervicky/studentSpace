@@ -259,9 +259,11 @@ app.post("/educreate", async (req, res) => {
   }
 });
 
-app.put("/eduupdate", async (req, res) => {
+app.put("/eduupdate/:id", async (req, res) => {
   const { name, degree, startedYear, endedYear, percentage } = req.body;
   const { token } = req.cookies;
+  const { id } = req.params;
+  console.log(id.toString());
   try {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
       if (err) throw err;
@@ -278,19 +280,28 @@ app.put("/eduupdate", async (req, res) => {
         eduCreate = University;
       }
       await eduCreate.updateOne(
-        { _id: tokenData.id },
+        {
+          education: {
+            $elemMatch: {
+              _id: id,
+            },
+          },
+        },
         {
           $set: {
-            "education.$": {
-              name,
-              degree,
-              startedYear,
-              endedYear,
-              percentage,
-            },
+            "education.$.name": name,
+            "education.$.degree": degree,
+            "education.$.startedYear": startedYear,
+            "education.$.endedYear": endedYear,
+            "education.$.percentage": percentage,
           },
         }
       );
+      // console.log(userData.find({ education: { $elemMatch: { name: } } }));
+      // let eduData = eduCreate.find({
+      //   education: { $elemMatch: { name: "srm ktr" } },
+      // });
+      // console.log(eduData);
       res.json("edu update");
     });
   } catch (error) {

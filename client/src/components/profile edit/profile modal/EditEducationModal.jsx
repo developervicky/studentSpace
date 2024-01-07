@@ -20,7 +20,7 @@ export default function EditEducationModal() {
   const bioUpdate = async (e) => {
     e.preventDefault;
     try {
-      await axios.put(`/eduupdate`, uni).then(() => {
+      await axios.put(`/eduupdate/${id}`, uni).then(() => {
         // window.location.href = "/user/profile";
       });
     } catch (error) {
