@@ -3,6 +3,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
+import { FaLink } from "react-icons/fa6";
 
 export default function ProfileProject() {
   const { user } = useContext(UserContext);
@@ -12,7 +13,7 @@ export default function ProfileProject() {
     });
   });
   return (
-    <div className="flex flex-col gap-4 rounded-lg border-2 border-primary2 px-6 py-4">
+    <div className="flex flex-col gap-4 whitespace-pre-line rounded-lg border-2 border-primary2 px-6 py-4">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold tracking-wide md:text-2xl">
           Projects
@@ -25,21 +26,35 @@ export default function ProfileProject() {
         {user.projects.map((project) => (
           <div
             key={project._id}
-            className="flex items-center justify-between pr-2"
+            className="flex items-center justify-between border-b-2 border-gray-800 pb-4 pr-2"
           >
-            <div>
-              <p>{project.name}</p>
-              <div className=" flex  gap-2">
-                {project.links.map((each, index) => (
-                  <a key={index} href={`https://${each.link}`}>
-                    {each.linkName}
-                  </a>
-                ))}
+            <div className="leading-relaxed">
+              <div className="flex items-center gap-7">
+                <div>
+                  <p className="font-bold tracking-wide">{project.name}</p>
+                  <p className="text-sm">
+                    {project.startedYear} to {project.endedYear}
+                  </p>
+                </div>
+                <div>
+                  <div className=" flex gap-2">
+                    {project.links.map((each, index) => (
+                      <a
+                        className="flex items-center gap-1 rounded-2xl border-2 border-primary2 bg-primary2 px-2 py-1  text-xs text-gray-400 underline underline-offset-2"
+                        target="_blank"
+                        rel="noreferrer"
+                        key={index}
+                        href={`${each.link}`}
+                      >
+                        <FaLink />
+                        {each.linkName}
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <p>
-                {project.startedYear} to {project.endedYear}
-              </p>
-              <p>{project.desc}</p>
+
+              <p className="mt-2 tracking-wide">{project.desc}</p>
             </div>
             <div>
               <Link to={`editproject/${project?._id}`} className="text-xl">

@@ -20,7 +20,7 @@ export default function ProfileEducation() {
       <div className="flex flex-col gap-4 text-sm text-gray-500 md:text-base">
         {user.education.map((uni) => (
           <div key={uni._id} className="flex items-center justify-between pr-2">
-            <div>
+            <div className="leading-relaxed">
               <p>{uni.name}</p>
               <p>{uni.degree}</p>
               <p>

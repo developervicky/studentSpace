@@ -304,7 +304,6 @@ app.put("/eduUpdate/:id", async (req, res) => {
 });
 
 app.delete("/eduDelete/:id", (req, res) => {
-  const { name, degree, startedYear, endedYear, percentage } = req.body;
   const { token } = req.cookies;
   const { id } = req.params;
 
@@ -388,6 +387,92 @@ app.post("/projectCreate", (req, res) => {
         }
       );
       res.json("project create");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.put("/projectUpdate/:id", (req, res) => {
+  const { name, startedYear, endedYear, desc } = req.body.project;
+  const link = req.body.link;
+  const { token } = req.cookies;
+  const { id } = req.params;
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      let projectUpdate = Student;
+      if (userData == FacultyUser) {
+        projectUpdate = Faculty;
+      }
+      if (userData == UniversityUser) {
+        projectUpdate = University;
+      }
+      await projectUpdate.updateOne(
+        {
+          projects: {
+            $elemMatch: {
+              _id: id,
+            },
+          },
+        },
+        {
+          $set: {
+            "projects.$.name": name,
+            "projects.$.desc": desc,
+            "projects.$.startedYear": startedYear,
+            "projects.$.endedYear": endedYear,
+            "projects.$.links": link.map((each) => {
+              return {
+                link: each.link,
+                linkName: each.linkName,
+              };
+            }),
+          },
+        }
+      );
+      res.json("edu update");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.delete("/projectDelete/:id", (req, res) => {
+  const { token } = req.cookies;
+  const { id } = req.params;
+
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      let projectDelete = Student;
+      if (userData == FacultyUser) {
+        projectDelete = Faculty;
+      }
+      if (userData == UniversityUser) {
+        projectDelete = University;
+      }
+      await projectDelete.updateOne(
+        { _id: userData._id },
+        {
+          $pull: {
+            projects: {
+              _id: id,
+            },
+          },
+        }
+      );
+      res.json("edu delete");
     });
   } catch (error) {
     res.send(error);

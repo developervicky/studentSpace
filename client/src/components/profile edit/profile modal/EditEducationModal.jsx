@@ -17,7 +17,7 @@ export default function EditEducationModal() {
 
   const navigate = useNavigate();
 
-  const bioUpdate = async (e) => {
+  const eduUpdate = async (e) => {
     e.preventDefault;
     try {
       await axios.put(`/eduUpdate/${id}`, uni).then(() => {
@@ -31,7 +31,7 @@ export default function EditEducationModal() {
   const deleteEdu = async (e) => {
     e.preventDefault;
     try {
-      await axios.delete(`/eduDelete/${id}`, uni).then(() => {
+      await axios.delete(`/eduDelete/${id}`).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {
@@ -132,7 +132,7 @@ export default function EditEducationModal() {
               <div className="flex flex-row-reverse gap-3">
                 <button
                   type="button"
-                  onClick={bioUpdate}
+                  onClick={eduUpdate}
                   className="inline-flex w-full justify-center rounded-md bg-primary2 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary3 sm:ml-3 sm:w-auto"
                 >
                   Submit
@@ -149,7 +149,7 @@ export default function EditEducationModal() {
                 <button
                   type="button"
                   onClick={deleteEdu}
-                  className="hover:bg-caution2 bg-caution inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:mr-3 sm:w-auto"
+                  className="inline-flex w-full justify-center rounded-md bg-caution px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-caution2 sm:mr-3 sm:w-auto"
                 >
                   Delete
                 </button>

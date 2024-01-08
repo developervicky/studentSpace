@@ -11,7 +11,7 @@ export default function AddProjectModal() {
     desc: "",
   });
   const [link, setLink] = useState([{ link: "", linkName: "" }]);
-  console.log(link);
+  // console.log(link);
   // const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ export default function AddProjectModal() {
       console.log(error);
     }
   };
-  console.log(project);
+  // console.log(project);
 
   return (
     <div
@@ -105,7 +105,7 @@ export default function AddProjectModal() {
                       <div key={index} className="grid grid-cols-2 gap-3">
                         <input
                           type="url"
-                          value={link.link}
+                          value={element.link}
                           name="link"
                           placeholder="Project Link"
                           onChange={(e) => {
@@ -115,7 +115,7 @@ export default function AddProjectModal() {
                         />
                         <input
                           type="text"
-                          value={link.linkName}
+                          value={element.linkName}
                           name="linkName"
                           placeholder="Link Name"
                           onChange={(e) => {
@@ -147,13 +147,6 @@ export default function AddProjectModal() {
                 </button>
               </div>
               <div>
-                <button
-                  type="button"
-                  // onClick={deleteEdu}
-                  className="hover:bg-caution2 bg-caution inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:mr-3 sm:w-auto"
-                >
-                  Delete
-                </button>
                 <button
                   type="button"
                   onClick={() => addInput()}
