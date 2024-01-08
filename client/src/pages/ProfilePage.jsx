@@ -11,7 +11,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <div className="mt-10 flex w-full flex-col gap-5 text-white">
+      <div className="my-10 flex w-full flex-col gap-5 text-white">
         <ProfileAbout user={user} />
         <ProfileEducation user={user} />
         <ProfileProject user={user} />

@@ -46,11 +46,16 @@ const StudentSchema = new Schema({
   ],
   awards: [
     {
-      awardName: { type: String },
+      name: { type: String },
       organization: { type: String },
       year: { type: String },
       desc: { type: String },
-      link: [{ type: String }],
+      links: [
+        {
+          link: { type: String },
+          linkName: { type: String },
+        },
+      ],
     },
   ],
 });

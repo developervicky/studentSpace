@@ -436,7 +436,7 @@ app.put("/projectUpdate/:id", (req, res) => {
           },
         }
       );
-      res.json("edu update");
+      res.json("project update");
     });
   } catch (error) {
     res.send(error);
@@ -479,4 +479,136 @@ app.delete("/projectDelete/:id", (req, res) => {
   }
 });
 
+app.post("/achCreate", (req, res) => {
+  const { name, organization, year, desc } = req.body.ach;
+  const links = req.body.links;
+  console.log(links);
+
+  const { token } = req.cookies;
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      let achCreate = Student;
+      if (userData == FacultyUser) {
+        achCreate = Faculty;
+      }
+      if (userData == UniversityUser) {
+        achCreate = University;
+      }
+      await achCreate.updateOne(
+        { _id: tokenData.id },
+        {
+          $addToSet: {
+            awards: {
+              name,
+              organization,
+              year,
+              desc,
+              links: links.map((each) => {
+                return {
+                  link: each.link,
+                  linkName: each.linkName,
+                };
+              }),
+            },
+          },
+        }
+      );
+      res.json("ach create");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.put("/achUpdate/:id", (req, res) => {
+  const { name, year, organization, desc } = req.body.ach;
+  const links = req.body.links;
+  const { token } = req.cookies;
+  const { id } = req.params;
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      let achUpdate = Student;
+      if (userData == FacultyUser) {
+        achUpdate = Faculty;
+      }
+      if (userData == UniversityUser) {
+        achUpdate = University;
+      }
+      await achUpdate.updateOne(
+        {
+          awards: {
+            $elemMatch: {
+              _id: id,
+            },
+          },
+        },
+        {
+          $set: {
+            "awards.$.name": name,
+            "awards.$.desc": desc,
+            "awards.$.year": year,
+            "awards.$.organization": organization,
+            "awards.$.links": links.map((each) => {
+              return {
+                link: each.link,
+                linkName: each.linkName,
+              };
+            }),
+          },
+        }
+      );
+      res.json("awards update");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.delete("/achDelete/:id", (req, res) => {
+  const { token } = req.cookies;
+  const { id } = req.params;
+
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      let achDelete = Student;
+      if (userData == FacultyUser) {
+        achDelete = Faculty;
+      }
+      if (userData == UniversityUser) {
+        achDelete = University;
+      }
+      await achDelete.updateOne(
+        { _id: userData._id },
+        {
+          $pull: {
+            awards: {
+              _id: id,
+            },
+          },
+        }
+      );
+      res.json("ach delete");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
 app.listen(5000);

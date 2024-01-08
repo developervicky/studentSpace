@@ -1,17 +1,11 @@
 import { IoAddCircleOutline } from "react-icons/io5";
 import { MdOutlineEdit } from "react-icons/md";
-import { useContext } from "react";
-import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
 import { FaLink } from "react-icons/fa6";
 
-export default function ProfileProject() {
-  const { user } = useContext(UserContext);
-  user.projects.map((project) => {
-    project.links.map((each) => {
-      console.log(each);
-    });
-  });
+export default function ProfileProject({ user }) {
+  // const { user } = useContext(UserContext);
+
   return (
     <div className="flex flex-col gap-4 whitespace-pre-line rounded-lg border-2 border-primary2 px-6 py-4">
       <div className="flex items-center justify-between">
@@ -26,9 +20,9 @@ export default function ProfileProject() {
         {user.projects.map((project) => (
           <div
             key={project._id}
-            className="flex items-center justify-between border-b-2 border-gray-800 pb-4 pr-2"
+            className="flex items-start justify-between border-b-2 border-gray-800 pb-4 pr-2"
           >
-            <div className="leading-relaxed">
+            <div className="flex grow flex-col leading-relaxed">
               <div className="flex items-center gap-7">
                 <div>
                   <p className="font-bold tracking-wide">{project.name}</p>
@@ -36,7 +30,7 @@ export default function ProfileProject() {
                     {project.startedYear} to {project.endedYear}
                   </p>
                 </div>
-                <div>
+                <div className="flex grow justify-between ">
                   <div className=" flex gap-2">
                     {project.links.map((each, index) => (
                       <a
@@ -51,15 +45,18 @@ export default function ProfileProject() {
                       </a>
                     ))}
                   </div>
+                  <div>
+                    <Link
+                      to={`editproject/${project?._id}`}
+                      className="text-xl"
+                    >
+                      <MdOutlineEdit />
+                    </Link>
+                  </div>
                 </div>
               </div>
 
               <p className="mt-2 tracking-wide">{project.desc}</p>
-            </div>
-            <div>
-              <Link to={`editproject/${project?._id}`} className="text-xl">
-                <MdOutlineEdit />
-              </Link>
             </div>
           </div>
         ))}

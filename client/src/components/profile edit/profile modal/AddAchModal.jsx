@@ -2,33 +2,33 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function AddProjectModal() {
-  const [project, setProject] = useState({
+export default function AddAchModal() {
+  const [ach, setAch] = useState({
     name: "",
-    startedYear: "",
-    endedYear: "",
+    organization: "",
+    year: "",
     desc: "",
   });
-  const [link, setLink] = useState([{ link: "", linkName: "" }]);
+  const [links, setLinks] = useState([{ link: "", linkName: "" }]);
   // console.log(link);
   // const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
 
   let handleChange = (i, e) => {
-    let newInputValues = [...link];
+    let newInputValues = [...links];
     newInputValues[i][e.target.name] = e.target.value;
-    setLink(newInputValues);
+    setLinks(newInputValues);
   };
 
   const addInput = async () => {
-    setLink([...link, { link: "", linkName: "" }]);
+    setLinks([...links, { link: "", linkName: "" }]);
   };
 
-  const projectCreate = async (e) => {
+  const achCreate = async (e) => {
     e.preventDefault;
     try {
-      await axios.post("/projectCreate", { project, link }).then(() => {
+      await axios.post("/achCreate", { ach, links }).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {
@@ -56,57 +56,61 @@ export default function AddProjectModal() {
                     className="text-base font-semibold leading-6 text-white"
                     id="modal-title"
                   >
-                    Add Project
+                    Add Achievement
                   </h3>
                   <div className=" mt-3 flex w-full flex-col gap-4">
                     <input
                       type="text"
-                      value={project.name}
-                      placeholder="Project Name"
+                      value={ach.name}
+                      placeholder="Achievement Name"
                       onChange={(e) => {
-                        setProject({ ...project, name: e.target.value });
-                      }}
-                      className="w-full rounded-md bg-gray-700 p-5 text-white outline-none"
-                    />
-                    <textarea
-                      type="text"
-                      value={project.desc}
-                      placeholder="Tell about your Project"
-                      onChange={(e) => {
-                        setProject({ ...project, desc: e.target.value });
+                        setAch({ ...ach, name: e.target.value });
                       }}
                       className="w-full rounded-md bg-gray-700 p-5 text-white outline-none"
                     />
                     <div className="grid grid-cols-2 gap-3">
                       <input
-                        type="number"
-                        value={project.startedYear}
-                        placeholder="Started Year"
+                        type="text"
+                        value={ach.organization}
+                        placeholder="Organization"
                         onChange={(e) => {
-                          setProject({
-                            ...project,
-                            startedYear: e.target.value,
+                          setAch({
+                            ...ach,
+                            organization: e.target.value,
                           });
                         }}
                         className="w-full rounded-md bg-gray-700 p-5 text-white outline-none"
                       />
                       <input
                         type="number"
-                        value={project.endedYear}
-                        placeholder="Ended Year"
+                        value={ach.year}
+                        placeholder="Year"
                         onChange={(e) => {
-                          setProject({ ...project, endedYear: e.target.value });
+                          setAch({
+                            ...ach,
+                            year: e.target.value,
+                          });
                         }}
                         className="w-full rounded-md bg-gray-700 p-5 text-white outline-none"
                       />
                     </div>
-                    {link.map((element, index) => (
+                    <textarea
+                      type="text"
+                      value={ach.desc}
+                      placeholder="Tell about your Achievement"
+                      onChange={(e) => {
+                        setAch({ ...ach, desc: e.target.value });
+                      }}
+                      className="w-full rounded-md bg-gray-700 p-5 text-white outline-none"
+                    />
+
+                    {links.map((element, index) => (
                       <div key={index} className="grid grid-cols-2 gap-3">
                         <input
                           type="url"
                           value={element.link}
                           name="link"
-                          placeholder="Project Link"
+                          placeholder="Achievement Link"
                           onChange={(e) => {
                             handleChange(index, e);
                           }}
@@ -132,7 +136,7 @@ export default function AddProjectModal() {
               <div className="flex flex-row-reverse gap-3">
                 <button
                   type="button"
-                  onClick={projectCreate}
+                  onClick={achCreate}
                   className="inline-flex w-full justify-center rounded-md bg-primary2 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary3 sm:ml-3 sm:w-auto"
                 >
                   Submit
