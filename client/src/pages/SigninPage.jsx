@@ -25,7 +25,7 @@ export default function SigninPage() {
   const signin = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/signin", credentials);
+      const { data } = await axios.post("/api/signin", credentials);
       setUser(data);
       Toastify("success", "Successful Login!");
       setRedirect(true);

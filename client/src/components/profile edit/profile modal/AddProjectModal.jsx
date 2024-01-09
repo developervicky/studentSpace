@@ -28,7 +28,7 @@ export default function AddProjectModal() {
   const projectCreate = async (e) => {
     e.preventDefault;
     try {
-      await axios.post("/projectCreate", { project, link }).then(() => {
+      await axios.post("/api/projectCreate", { project, link }).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {

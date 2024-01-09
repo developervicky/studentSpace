@@ -10,7 +10,7 @@ export default function ProfilePhotoModal({ setModalOn }) {
     const profilePhotoData = new FormData();
     profilePhotoData.append("profilePhoto", photoInfo[0]);
     axios
-      .post("/upload/profilepic", profilePhotoData, {
+      .post("/api/upload/profilepic", profilePhotoData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then(() => {
@@ -18,7 +18,7 @@ export default function ProfilePhotoModal({ setModalOn }) {
       });
   };
   const deletePhoto = () => {
-    axios.delete("/deletedp").then(() => {
+    axios.delete("/api/deletedp").then(() => {
       window.location.href = "/user/profile";
     });
   };

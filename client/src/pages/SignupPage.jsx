@@ -28,7 +28,7 @@ export default function SignupPage() {
   const registerUser = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/signup", credentials);
+      const { data } = await axios.post("/api/signup", credentials);
       // Toastify()
       Toastify("success", `${data}`);
       console.log(data);

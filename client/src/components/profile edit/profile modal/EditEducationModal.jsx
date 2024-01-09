@@ -20,7 +20,7 @@ export default function EditEducationModal() {
   const eduUpdate = async (e) => {
     e.preventDefault;
     try {
-      await axios.put(`/eduUpdate/${id}`, uni).then(() => {
+      await axios.put(`/api/eduUpdate/${id}`, uni).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {
@@ -31,7 +31,7 @@ export default function EditEducationModal() {
   const deleteEdu = async (e) => {
     e.preventDefault;
     try {
-      await axios.delete(`/eduDelete/${id}`).then(() => {
+      await axios.delete(`/api/eduDelete/${id}`).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {

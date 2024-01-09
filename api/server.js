@@ -61,7 +61,9 @@ app.get("/", (req, res) => {
   res.send("Hello from server");
 });
 
-app.post("/signup", async (req, res) => {
+app.post("/api/signup", async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   try {
     const { fname, email, pwd, agreed, accType, userName } = req.body;
     if (!fname || !email || !pwd || !accType || !userName) {
@@ -124,7 +126,9 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.post("/signin", async (req, res) => {
+app.post("/api/signin", async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { userName, pwd } = req.body;
 
   try {
@@ -177,7 +181,9 @@ app.post("/signin", async (req, res) => {
   }
 });
 
-app.get("/userData", (req, res) => {
+app.get("/api/userData", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { token } = req.cookies;
   if (token) {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
@@ -194,6 +200,8 @@ app.get("/userData", (req, res) => {
 });
 
 app.get("/api/:id/verify/:token", async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   try {
     let StudentUser = await Student.findOne({ _id: req.params.id });
     let FacultyUser = await Faculty.findOne({ _id: req.params.id });
@@ -221,11 +229,13 @@ app.get("/api/:id/verify/:token", async (req, res) => {
   }
 });
 
-app.post("/logout", (req, res) => {
+app.post("/api/logout", (req, res) => {
   res.cookie("token", "").json("Succesful Logout");
 });
 
-app.post("/infoUpdate", async (req, res) => {
+app.post("/api/infoUpdate", async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { bio } = req.body;
   const { token } = req.cookies;
   try {
@@ -247,7 +257,9 @@ app.post("/infoUpdate", async (req, res) => {
   }
 });
 
-app.post("/eduCreate", async (req, res) => {
+app.post("/api/eduCreate", async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { name, degree, startedYear, endedYear, percentage } = req.body;
   const { token } = req.cookies;
   try {
@@ -286,7 +298,9 @@ app.post("/eduCreate", async (req, res) => {
   }
 });
 
-app.put("/eduUpdate/:id", async (req, res) => {
+app.put("/api/eduUpdate/:id", async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { name, degree, startedYear, endedYear, percentage } = req.body;
   const { token } = req.cookies;
   const { id } = req.params;
@@ -330,7 +344,9 @@ app.put("/eduUpdate/:id", async (req, res) => {
   }
 });
 
-app.delete("/eduDelete/:id", (req, res) => {
+app.delete("/api/eduDelete/:id", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { token } = req.cookies;
   const { id } = req.params;
 
@@ -366,17 +382,19 @@ app.delete("/eduDelete/:id", (req, res) => {
   }
 });
 
-app.post("/projectCreate", (req, res) => {
+app.post("/api/projectCreate", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { name, startedYear, endedYear, desc } = req.body.project;
   const link = req.body.link;
-  console.log(
-    link.map((each) => {
-      return {
-        link: each.link,
-        linkName: each.linkName,
-      };
-    })
-  );
+  // console.log(
+  //   link.map((each) => {
+  //     return {
+  //       link: each.link,
+  //       linkName: each.linkName,
+  //     };
+  //   })
+  // );
 
   const { token } = req.cookies;
   try {
@@ -420,7 +438,9 @@ app.post("/projectCreate", (req, res) => {
   }
 });
 
-app.put("/projectUpdate/:id", (req, res) => {
+app.put("/api/projectUpdate/:id", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { name, startedYear, endedYear, desc } = req.body.project;
   const link = req.body.link;
   const { token } = req.cookies;
@@ -470,7 +490,9 @@ app.put("/projectUpdate/:id", (req, res) => {
   }
 });
 
-app.delete("/projectDelete/:id", (req, res) => {
+app.delete("/api/projectDelete/:id", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { token } = req.cookies;
   const { id } = req.params;
 
@@ -506,7 +528,9 @@ app.delete("/projectDelete/:id", (req, res) => {
   }
 });
 
-app.post("/achCreate", (req, res) => {
+app.post("/api/achCreate", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { name, organization, year, desc } = req.body.ach;
   const links = req.body.links;
   console.log(links);
@@ -553,7 +577,9 @@ app.post("/achCreate", (req, res) => {
   }
 });
 
-app.put("/achUpdate/:id", (req, res) => {
+app.put("/api/achUpdate/:id", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { name, year, organization, desc } = req.body.ach;
   const links = req.body.links;
   const { token } = req.cookies;
@@ -603,7 +629,9 @@ app.put("/achUpdate/:id", (req, res) => {
   }
 });
 
-app.delete("/achDelete/:id", (req, res) => {
+app.delete("/api/achDelete/:id", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { token } = req.cookies;
   const { id } = req.params;
 
@@ -640,9 +668,11 @@ app.delete("/achDelete/:id", (req, res) => {
 });
 const photoMiddleware = multer({ dest: "/tmp" });
 app.post(
-  "/upload/profilepic",
+  "/api/upload/profilepic",
   photoMiddleware.single("profilePhoto"),
   async (req, res) => {
+    mongoose.connect(process.env.MONGO_URL);
+
     const uploadedFiles = [];
     const { token } = req.cookies;
 
@@ -677,7 +707,9 @@ app.post(
   }
 );
 
-app.delete("/deletedp", (req, res) => {
+app.delete("/api/deletedp", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { token } = req.cookies;
 
   jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
@@ -705,4 +737,5 @@ app.delete("/deletedp", (req, res) => {
   });
   res.json("dp deleted");
 });
+
 app.listen(5000);

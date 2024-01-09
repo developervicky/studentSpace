@@ -17,7 +17,7 @@ export default function Leftbar() {
   }
 
   const logout = async () => {
-    await axios.post("/logout").then((res) => {
+    await axios.post("/api/logout").then((res) => {
       // console.log(res);
       Toastify("success", `${res.data}`);
       setRedirect(true);

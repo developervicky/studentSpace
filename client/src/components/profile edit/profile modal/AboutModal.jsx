@@ -11,7 +11,7 @@ export default function AboutModal() {
   const bioUpdate = async (e) => {
     e.preventDefault;
     try {
-      await axios.post("/infoUpdate", { bio }).then(() => {
+      await axios.post("/api/infoUpdate", { bio }).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {

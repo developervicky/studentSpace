@@ -29,7 +29,7 @@ export default function EditProjectModal() {
   const projectUpdate = async (e) => {
     e.preventDefault;
     try {
-      await axios.put(`/projectUpdate/${id}`, { project, link }).then(() => {
+      await axios.put(`/api/projectUpdate/${id}`, { project, link }).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {
@@ -40,7 +40,7 @@ export default function EditProjectModal() {
   const deleteProject = async (e) => {
     e.preventDefault;
     try {
-      await axios.delete(`/projectDelete/${id}`).then(() => {
+      await axios.delete(`/api/projectDelete/${id}`).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {

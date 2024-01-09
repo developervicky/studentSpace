@@ -10,6 +10,7 @@ const FacultySchema = new Schema({
   accType: { type: String, required: true },
   verified: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now() },
+  profilePhoto: [String],
   posts: [
     {
       description: { type: String },

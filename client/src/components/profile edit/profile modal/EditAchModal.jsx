@@ -29,7 +29,7 @@ export default function EditAchModal() {
   const achUpdate = async (e) => {
     e.preventDefault;
     try {
-      await axios.put(`/achUpdate/${id}`, { ach, links }).then(() => {
+      await axios.put(`/api/achUpdate/${id}`, { ach, links }).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {
@@ -40,7 +40,7 @@ export default function EditAchModal() {
   const deleteAch = async (e) => {
     e.preventDefault;
     try {
-      await axios.delete(`/achDelete/${id}`).then(() => {
+      await axios.delete(`/api/achDelete/${id}`).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {

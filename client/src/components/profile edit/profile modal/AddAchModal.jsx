@@ -28,7 +28,7 @@ export default function AddAchModal() {
   const achCreate = async (e) => {
     e.preventDefault;
     try {
-      await axios.post("/achCreate", { ach, links }).then(() => {
+      await axios.post("/api/achCreate", { ach, links }).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {

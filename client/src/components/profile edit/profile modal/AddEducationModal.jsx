@@ -16,7 +16,7 @@ export default function AddEducationModal() {
   const eduCreate = async (e) => {
     e.preventDefault;
     try {
-      await axios.post("/eduCreate", uni).then(() => {
+      await axios.post("/api/eduCreate", uni).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {
