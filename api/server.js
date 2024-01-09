@@ -6,6 +6,9 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const cookieParser = require("cookie-parser");
+const multer = require("multer");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const fs = require("fs");
 
 const Student = require("./model/Student");
 const Faculty = require("./model/Faculty");
@@ -18,6 +21,7 @@ app.use(cookieParser());
 
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = "gbfuiejwsdhujhsrkbdhuikdf";
+const bucket = "studentspace-app";
 
 app.use(express.json());
 app.use(
@@ -29,6 +33,29 @@ app.use(
 
 mongoose.connect(process.env.MONGO_URL);
 // C4Ge4SYq4YtYxNn1 developervicky6
+
+async function uploadToS3(path, originalName, mimeType) {
+  const client = new S3Client({
+    region: "ap-south-1",
+    credentials: {
+      accessKeyId: process.env.S3_ACCESS_KEY,
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+    },
+  });
+  const parts = originalName.split(".");
+  const ext = parts[parts.length - 1];
+  const newFilename = Date.now() + "." + ext;
+  const data = await client.send(
+    new PutObjectCommand({
+      Bucket: bucket,
+      Body: fs.readFileSync(path),
+      Key: newFilename,
+      ContentType: mimeType,
+      ACL: "public-read",
+    })
+  );
+  return `https://${bucket}.s3.amazonaws.com/${newFilename}`;
+}
 
 app.get("/", (req, res) => {
   res.send("Hello from server");
@@ -610,5 +637,72 @@ app.delete("/achDelete/:id", (req, res) => {
   } catch (error) {
     res.send(error);
   }
+});
+const photoMiddleware = multer({ dest: "/tmp" });
+app.post(
+  "/upload/profilepic",
+  photoMiddleware.single("profilePhoto"),
+  async (req, res) => {
+    const uploadedFiles = [];
+    const { token } = req.cookies;
+
+    const { path, originalname, mimetype } = req.file;
+    const url = await uploadToS3(path, originalname, mimetype);
+    uploadedFiles.push(url);
+
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      let dpUpdate = Student;
+      if (userData == FacultyUser) {
+        dpUpdate = Faculty;
+      }
+      if (userData == UniversityUser) {
+        dpUpdate = University;
+      }
+      await dpUpdate.updateOne(
+        { _id: userData._id },
+        {
+          $push: {
+            profilePhoto: url,
+          },
+        }
+      );
+    });
+    res.send(uploadedFiles);
+  }
+);
+
+app.delete("/deletedp", (req, res) => {
+  const { token } = req.cookies;
+
+  jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+    if (err) throw err;
+    let StudentUser = await Student.findOne({ email: tokenData.email });
+    let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+    let UniversityUser = await University.findOne({ email: tokenData.email });
+    const userData = StudentUser || FacultyUser || UniversityUser;
+
+    let dpDelete = Student;
+    if (userData == FacultyUser) {
+      dpDelete = Faculty;
+    }
+    if (userData == UniversityUser) {
+      dpDelete = University;
+    }
+    await dpDelete.updateOne(
+      { _id: userData._id },
+      {
+        $set: {
+          profilePhoto: [],
+        },
+      }
+    );
+  });
+  res.json("dp deleted");
 });
 app.listen(5000);
