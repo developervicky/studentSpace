@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import { FaSearch, FaUserCircle } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { LiaUniversitySolid } from "react-icons/lia";
 import { LuNewspaper, LuLogOut } from "react-icons/lu";
@@ -23,6 +23,10 @@ export default function DesktopLeftbar({ logout }) {
         studentSpace
       </h1>
       <div className="flex flex-col gap-2 ">
+        <Link to={"/user/search"} className={hoverClass("search")}>
+          <FaSearch className="text-2xl" />
+          <p>Search</p>
+        </Link>
         <Link to={"/user/profile"} className={hoverClass("profile")}>
           <FaUserCircle className="text-2xl" />
           <p>Profile</p>

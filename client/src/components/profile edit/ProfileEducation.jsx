@@ -4,7 +4,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 
-export default function ProfileEducation({user}) {
+export default function ProfileEducation({ user }) {
   // const { user } = useContext(UserContext);
   // console.log(user.education);
   return (
@@ -18,25 +18,29 @@ export default function ProfileEducation({user}) {
         </Link>
       </div>
       <div className="flex flex-col gap-4 text-sm text-gray-500 md:text-base">
-        {user.education.map((uni) => (
-          <div key={uni._id} className="flex items-start justify-between pr-2">
-            <div className="leading-relaxed">
-              <p className="font-bold tracking-wide">{uni.name}</p>
-              <p className="text-sm font-semibold tracking-wide">
-                {uni.degree}
-              </p>
-              <p className="text-sm">
-                {uni.startedYear} to {uni.endedYear}
-              </p>
-              <p className="text-sm">{uni.percentage}%</p>
+        {user?.accType == "student" &&
+          user.education.map((uni) => (
+            <div
+              key={uni._id}
+              className="flex items-start justify-between pr-2"
+            >
+              <div className="leading-relaxed">
+                <p className="font-bold tracking-wide">{uni.name}</p>
+                <p className="text-sm font-semibold tracking-wide">
+                  {uni.degree}
+                </p>
+                <p className="text-sm">
+                  {uni.startedYear} to {uni.endedYear}
+                </p>
+                <p className="text-sm">{uni.percentage}%</p>
+              </div>
+              <div>
+                <Link to={`editedu/${uni._id}`} className="text-xl">
+                  <MdOutlineEdit />
+                </Link>
+              </div>
             </div>
-            <div>
-              <Link to={`editedu/${uni._id}`} className="text-xl">
-                <MdOutlineEdit />
-              </Link>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

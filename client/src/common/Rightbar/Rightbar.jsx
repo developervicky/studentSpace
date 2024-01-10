@@ -35,7 +35,9 @@ export default function Rightbar() {
               {user?.fname}
             </h2>
             <p className="text-xs  capitalize tracking-wide">
-              {user?.accType} - {user?.education[0]?.name}
+              {user?.accType == "student"
+                ? `${user?.accType} - ${user?.education[0]?.name}`
+                : `${user?.accType}`}
             </p>
           </div>
         </div>
