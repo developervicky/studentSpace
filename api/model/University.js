@@ -8,7 +8,11 @@ const UniversitySchema = new Schema({
   pwd: { type: String, required: true },
   agreed: { type: Boolean, required: true },
   accType: { type: String, required: true },
+  city: { type: String },
+  state: { type: String },
+  country: { type: String },
   verified: { type: Boolean, default: false },
+
   createdAt: { type: Date, default: Date.now() },
   profilePhoto: [String],
   posts: [

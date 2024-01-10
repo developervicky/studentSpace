@@ -738,4 +738,45 @@ app.delete("/api/deletedp", (req, res) => {
   res.json("dp deleted");
 });
 
+app.put("/api/updateData", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
+  const { fname, userName, city, state, country } = req.body;
+  const { token } = req.cookies;
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ email: tokenData.email });
+      let FacultyUser = await Faculty.findOne({ email: tokenData.email });
+      let UniversityUser = await University.findOne({ email: tokenData.email });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      let userUpdate = Student;
+      if (userData == FacultyUser) {
+        userUpdate = Faculty;
+      }
+      if (userData == UniversityUser) {
+        userUpdate = University;
+      }
+      await userUpdate.updateOne(
+        {
+          _id: userData._id,
+        },
+
+        {
+          $set: {
+            fname,
+            userName,
+            city,
+            state,
+            country,
+          },
+        }
+      );
+      res.json("user updated");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
 app.listen(5000);
