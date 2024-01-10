@@ -779,4 +779,37 @@ app.put("/api/updateData", (req, res) => {
     res.send(error);
   }
 });
+
+app.get("/api/search", async (req, res) => {
+  const { q } = req.query;
+  // const keys = [fname, city, state, country];
+  let Studentusers = [];
+  let Facultyusers = [];
+  let Univusers = [];
+  const studentUsers = await Student.find({
+    fname: { $regex: q, $options: "i" },
+  });
+  const universityUsers = await University.find({
+    fname: { $regex: q, $options: "i" },
+  });
+  const facultyUsers = await Faculty.find({
+    fname: { $regex: q, $options: "i" },
+  });
+
+  const eachStudent = studentUsers.map((student) => {
+    const { fname, city, state, country, accType, profilePhoto } = student;
+    Studentusers.push({ fname, city, state, country, accType, profilePhoto });
+  });
+  const eachUniversity = universityUsers.map((univ) => {
+    const { fname, city, state, country, accType, profilePhoto } = univ;
+    Univusers.push({ fname, city, state, country, accType, profilePhoto });
+  });
+  const eachFaculty = facultyUsers.map((faculty) => {
+    const { fname, city, state, country, accType, profilePhoto } = faculty;
+    Facultyusers.push({ fname, city, state, country, accType, profilePhoto });
+  });
+  // console.log(eachStudent);
+  res.json({ Studentusers, Univusers, Facultyusers });
+});
+
 app.listen(5000);

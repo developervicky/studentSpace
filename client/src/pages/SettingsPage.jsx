@@ -20,7 +20,7 @@ export default function SettingsPage() {
   console.log(userData);
   const updateData = () => {
     axios.put("/api/updateData", userData).then(() => {
-      // window.location.reload();
+      window.location.reload();
     });
   };
 
