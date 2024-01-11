@@ -7,9 +7,11 @@ import ProfileAch from "../components/profile edit/ProfileAch";
 import ProfileProject from "../components/profile edit/ProfileProject";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import LoadingPage from "./LoadingPage";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState();
+  const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
   const { id } = useParams();
 
@@ -17,17 +19,22 @@ export default function ProfilePage() {
     axios.get(`/api/profileData/${id}`).then((res) => {
       console.log(res.data);
       setUserData(res.data);
+      setLoading(false);
     });
   }, [id]);
   return (
     <>
-      {id == userData?._id && (
-        <div className="my-10 flex w-full flex-col gap-5 text-white">
-          <ProfileAbout user={userData} owner={user} />
-          <ProfileEducation user={userData} owner={user} />
-          <ProfileProject user={userData} owner={user} />
-          <ProfileAch user={userData} owner={user} />
-        </div>
+      {loading ? (
+        <LoadingPage />
+      ) : (
+        id == userData?._id && (
+          <div className="my-10 flex w-full flex-col gap-5 text-white">
+            <ProfileAbout user={userData} owner={user} />
+            <ProfileEducation user={userData} owner={user} />
+            <ProfileProject user={userData} owner={user} />
+            <ProfileAch user={userData} owner={user} />
+          </div>
+        )
       )}
     </>
   );
