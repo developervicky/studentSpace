@@ -6,6 +6,7 @@ import AddProjectModal from "../components/profile edit/profile modal/AddProject
 import EditProjectModal from "../components/profile edit/profile modal/EditProjectModal";
 import AddAchModal from "../components/profile edit/profile modal/AddAchModal";
 import EditAchModal from "../components/profile edit/profile modal/EditAchModal";
+import ProfilePage from "../pages/ProfilePage";
 
 export default function ModalLayout() {
   const { action } = useParams();
@@ -19,6 +20,7 @@ export default function ModalLayout() {
       {action == "editproject" && <EditProjectModal />}
       {action == "addach" && <AddAchModal />}
       {action == "editach" && <EditAchModal />}
+      {action == "profile" && <ProfilePage />}
     </>
   );
 }

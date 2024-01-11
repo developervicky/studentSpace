@@ -13,6 +13,7 @@ export default function UserLayout() {
       {subpage == "university" && <UniversityPage />}
       {subpage == "settings" && <SettingsPage />}
       {subpage == "search" && <SearchPage />}
+      {}
     </>
   );
 }

@@ -11,7 +11,6 @@ import ModalLayout from "../layout/ModalLayout";
 import AboutModal from "../components/profile edit/profile modal/AboutModal";
 import EditEducationModal from "../components/profile edit/profile modal/EditEducationModal";
 
-
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 axios.defaults.withCredentials = true;
 
@@ -34,6 +33,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: ":subpage/",
+        element: <UserLayout />,
+      },
+      {
+        path: ":subpage/:id",
         element: <UserLayout />,
       },
       {

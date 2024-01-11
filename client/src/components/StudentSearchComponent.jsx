@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 
 export default function StudentSearchComponent({ studentData }) {
   return (
@@ -8,7 +8,8 @@ export default function StudentSearchComponent({ studentData }) {
         <div className="grid grid-cols-5 gap-5">
           {studentData?.length > 0 ? (
             studentData?.map((student, index) => (
-              <div
+              <Link
+                to={`/user/search/profile/${student?._id}`}
                 key={index}
                 className="flex flex-col  items-center rounded-lg border-2 border-primary2 p-2"
               >
@@ -32,7 +33,7 @@ export default function StudentSearchComponent({ studentData }) {
                     {student?.city},{student?.country}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))
           ) : (
             <div className="mx-auto tracking-wide text-gray-500">

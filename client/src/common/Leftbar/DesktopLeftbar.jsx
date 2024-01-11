@@ -5,8 +5,11 @@ import { LiaUniversitySolid } from "react-icons/lia";
 import { LuNewspaper, LuLogOut } from "react-icons/lu";
 import { MdOutlineFeed } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useContext } from "react";
+import { UserContext } from "../../components/UserContext";
 
 export default function DesktopLeftbar({ logout }) {
+  const { user } = useContext(UserContext);
   const { subpage } = useParams();
 
   const hoverClass = (type) => {
@@ -27,7 +30,10 @@ export default function DesktopLeftbar({ logout }) {
           <FaSearch className="text-2xl" />
           <p>Search</p>
         </Link>
-        <Link to={"/user/profile"} className={hoverClass("profile")}>
+        <Link
+          to={`/user/profile/${user._id}`}
+          className={hoverClass("profile")}
+        >
           <FaUserCircle className="text-2xl" />
           <p>Profile</p>
         </Link>

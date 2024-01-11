@@ -3,7 +3,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaLink } from "react-icons/fa6";
 
-export default function ProfileProject({ user }) {
+export default function ProfileProject({ user, owner }) {
   // const { user } = useContext(UserContext);
 
   return (
@@ -12,10 +12,13 @@ export default function ProfileProject({ user }) {
         <h1 className="text-lg font-semibold tracking-wide md:text-2xl">
           Projects
         </h1>
-        <Link to={"addproject/"} className="text-xl">
-          <IoAddCircleOutline />
-        </Link>
+        {owner?._id == user?._id && (
+          <Link to={"addproject/"} className="text-xl">
+            <IoAddCircleOutline />
+          </Link>
+        )}
       </div>
+
       <div className="flex flex-col gap-4 text-sm text-gray-500 md:text-base">
         {user?.accType == "student" &&
           user.projects.map((project) => (
@@ -46,14 +49,16 @@ export default function ProfileProject({ user }) {
                         </a>
                       ))}
                     </div>
-                    <div>
-                      <Link
-                        to={`editproject/${project?._id}`}
-                        className="text-xl"
-                      >
-                        <MdOutlineEdit />
-                      </Link>
-                    </div>
+                    {owner?._id == user?._id && (
+                      <div>
+                        <Link
+                          to={`editproject/${project?._id}`}
+                          className="text-xl"
+                        >
+                          <MdOutlineEdit />
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
 

@@ -4,16 +4,18 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { FaLink } from "react-icons/fa6";
 
-export default function ProfileAch({ user }) {
+export default function ProfileAch({ user, owner }) {
   return (
     <div className="flex flex-col gap-4 rounded-lg border-2 border-primary2 px-6 py-4">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold tracking-wide md:text-2xl">
           Achievements
         </h1>
-        <Link to={"addach"} className="text-xl">
-          <IoAddCircleOutline />
-        </Link>
+        {owner?._id == user?._id && (
+          <Link to={"addach"} className="text-xl">
+            <IoAddCircleOutline />
+          </Link>
+        )}
       </div>
       <div className="flex flex-col gap-4 text-sm text-gray-500 md:text-base">
         {user?.accType == "student" &&
@@ -51,11 +53,13 @@ export default function ProfileAch({ user }) {
 
                 <p className="mt-2 tracking-wide">{award.desc}</p>
               </div>
-              <div>
-                <Link to={`editach/${award._id}`} className="text-xl">
-                  <MdOutlineEdit />
-                </Link>
-              </div>
+              {owner?._id == user?._id && (
+                <div>
+                  <Link to={`editach/${award._id}`} className="text-xl">
+                    <MdOutlineEdit />
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
       </div>

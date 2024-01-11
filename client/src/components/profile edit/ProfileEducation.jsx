@@ -4,7 +4,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 
-export default function ProfileEducation({ user }) {
+export default function ProfileEducation({ user, owner }) {
   // const { user } = useContext(UserContext);
   // console.log(user.education);
   return (
@@ -13,9 +13,11 @@ export default function ProfileEducation({ user }) {
         <h1 className="text-lg font-semibold tracking-wide md:text-2xl">
           Education
         </h1>
-        <Link to={"addedu"} className="text-xl">
-          <IoAddCircleOutline />
-        </Link>
+        {owner?._id == user?._id && (
+          <Link to={"addedu"} className="text-xl">
+            <IoAddCircleOutline />
+          </Link>
+        )}
       </div>
       <div className="flex flex-col gap-4 text-sm text-gray-500 md:text-base">
         {user?.accType == "student" &&
@@ -34,11 +36,13 @@ export default function ProfileEducation({ user }) {
                 </p>
                 <p className="text-sm">{uni.percentage}%</p>
               </div>
-              <div>
-                <Link to={`editedu/${uni._id}`} className="text-xl">
-                  <MdOutlineEdit />
-                </Link>
-              </div>
+              {owner?._id == user?._id && (
+                <div>
+                  <Link to={`editedu/${uni._id}`} className="text-xl">
+                    <MdOutlineEdit />
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
       </div>

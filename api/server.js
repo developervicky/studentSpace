@@ -797,19 +797,58 @@ app.get("/api/search", async (req, res) => {
   });
 
   const eachStudent = studentUsers.map((student) => {
-    const { fname, city, state, country, accType, profilePhoto } = student;
-    Studentusers.push({ fname, city, state, country, accType, profilePhoto });
+    const { fname, city, state, country, accType, profilePhoto, _id } = student;
+    Studentusers.push({ fname, city, state, country, accType, profilePhoto, _id });
   });
   const eachUniversity = universityUsers.map((univ) => {
-    const { fname, city, state, country, accType, profilePhoto } = univ;
-    Univusers.push({ fname, city, state, country, accType, profilePhoto });
+    const { fname, city, state, country, accType, profilePhoto, _id } = univ;
+    Univusers.push({ fname, city, state, country, accType, profilePhoto, _id });
   });
   const eachFaculty = facultyUsers.map((faculty) => {
-    const { fname, city, state, country, accType, profilePhoto } = faculty;
-    Facultyusers.push({ fname, city, state, country, accType, profilePhoto });
+    const { fname, city, state, country, accType, profilePhoto, _id } = faculty;
+    Facultyusers.push({ fname, city, state, country, accType, profilePhoto, _id });
   });
   // console.log(eachStudent);
   res.json({ Studentusers, Univusers, Facultyusers });
 });
 
+app.get("/api/profileData/:id", (req, res) => {
+  const { token } = req.cookies;
+  const { id } = req.params;
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      let StudentUser = await Student.findOne({ _id: id });
+      let FacultyUser = await Faculty.findOne({ _id: id });
+      let UniversityUser = await University.findOne({ _id: id });
+      const userData = StudentUser || FacultyUser || UniversityUser;
+
+      // let userUpdate = Student;
+      // if (userData == FacultyUser) {
+      //   userUpdate = Faculty;
+      // }
+      // if (userData == UniversityUser) {
+      //   userUpdate = University;
+      // }
+      // await userUpdate.updateOne(
+      //   {
+      //     _id: userData._id,
+      //   },
+
+      //   {
+      //     $set: {
+      //       fname,
+      //       userName,
+      //       city,
+      //       state,
+      //       country,
+      //     },
+      //   }
+      // );
+      res.json(userData);
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
 app.listen(5000);
