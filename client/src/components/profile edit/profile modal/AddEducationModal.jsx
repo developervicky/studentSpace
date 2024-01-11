@@ -1,8 +1,10 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../UserContext";
 
 export default function AddEducationModal() {
+  const { user } = useContext(UserContext);
   const [uni, setUni] = useState({
     name: "",
     degree: "",
@@ -17,7 +19,7 @@ export default function AddEducationModal() {
     e.preventDefault;
     try {
       await axios.post("/api/eduCreate", uni).then(() => {
-        window.location.href = "/user/profile";
+        window.location.href = `/user/profile/${user._id}`;
       });
     } catch (error) {
       console.log(error);

@@ -21,7 +21,7 @@ export default function EditEducationModal() {
     e.preventDefault;
     try {
       await axios.put(`/api/eduUpdate/${subid}`, uni).then(() => {
-        window.location.href = "/user/profile";
+        window.location.href = `/user/profile/${user._id}`;
       });
     } catch (error) {
       console.log(error);
@@ -32,7 +32,7 @@ export default function EditEducationModal() {
     e.preventDefault;
     try {
       await axios.delete(`/api/eduDelete/${subid}`).then(() => {
-        window.location.href = "/user/profile";
+        window.location.href = `/user/profile/${user._id}`;
       });
     } catch (error) {
       console.log(error);

@@ -30,7 +30,7 @@ export default function EditAchModal() {
     e.preventDefault;
     try {
       await axios.put(`/api/achUpdate/${subid}`, { ach, links }).then(() => {
-        window.location.href = "/user/profile";
+        window.location.href = `/user/profile/${user._id}`;
       });
     } catch (error) {
       console.log(error);
@@ -41,7 +41,7 @@ export default function EditAchModal() {
     e.preventDefault;
     try {
       await axios.delete(`/api/achDelete/${subid}`).then(() => {
-        window.location.href = "/user/profile";
+        window.location.href = `/user/profile/${user._id}`;
       });
     } catch (error) {
       console.log(error);

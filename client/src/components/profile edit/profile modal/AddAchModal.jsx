@@ -1,8 +1,10 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../UserContext";
 
 export default function AddAchModal() {
+  const { user } = useContext(UserContext);
   const [ach, setAch] = useState({
     name: "",
     organization: "",
@@ -29,7 +31,7 @@ export default function AddAchModal() {
     e.preventDefault;
     try {
       await axios.post("/api/achCreate", { ach, links }).then(() => {
-        window.location.href = "/user/profile";
+        window.location.href = `/user/profile/${user._id}`;
       });
     } catch (error) {
       console.log(error);

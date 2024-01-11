@@ -15,7 +15,7 @@ export default function SigninPage() {
 
   const { setUser, user, ready } = useContext(UserContext);
   if (user) {
-    return <Navigate to={"/user/profile"} />;
+    return <Navigate to={`/user/profile/${user._id}`} />;
   }
 
   if (!ready) {
@@ -36,7 +36,7 @@ export default function SigninPage() {
   };
 
   if (redirect) {
-    return <Navigate to={"/user/profile"} />;
+    return <Navigate to={`/user/profile/${user._id}`} />;
   }
 
   console.log(credentials);

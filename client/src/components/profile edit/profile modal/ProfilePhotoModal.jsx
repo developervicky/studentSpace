@@ -1,8 +1,10 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
+import { UserContext } from "../../UserContext";
 
 export default function ProfilePhotoModal({ setModalOn }) {
+  const { user } = useContext(UserContext);
   const [photoInfo, setPhotoInfo] = useState();
   const [loading, setLoading] = useState(false);
   const uploadPhoto = () => {
@@ -14,12 +16,12 @@ export default function ProfilePhotoModal({ setModalOn }) {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then(() => {
-        window.location.href = "/user/profile";
+        window.location.href = `/user/profile/${user._id}`;
       });
   };
   const deletePhoto = () => {
     axios.delete("/api/deletedp").then(() => {
-      window.location.href = "/user/profile";
+      window.location.href = `/user/profile/${user._id}`;
     });
   };
   console.log(photoInfo);

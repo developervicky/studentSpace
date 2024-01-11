@@ -12,7 +12,7 @@ export default function AboutModal() {
     e.preventDefault;
     try {
       await axios.post("/api/infoUpdate", { bio }).then(() => {
-        window.location.href = "/user/profile";
+        window.location.href = `/user/profile/${user._id}`;
       });
     } catch (error) {
       console.log(error);
