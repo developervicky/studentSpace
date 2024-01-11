@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import StudentSearchComponent from "../components/StudentSearchComponent";
+import UnivSearchComponent from "../components/UnivSearchComponent";
+import FacultySearchComponent from "../components/FacultySearchComponent";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -36,8 +38,10 @@ export default function SearchPage() {
             <FaSearch />
           </button>
         </label>
-        <div className="h-full rounded-lg border-2 border-primary2 tracking-wide text-white">
+        <div className="flex h-full flex-col rounded-lg border-2 border-primary2 tracking-wide text-white">
           <StudentSearchComponent studentData={studentData} />
+          <UnivSearchComponent univData={universityData} />
+          <FacultySearchComponent facultyData={facultyData} />
         </div>
       </div>
     </>

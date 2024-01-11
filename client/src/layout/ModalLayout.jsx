@@ -7,6 +7,8 @@ import EditProjectModal from "../components/profile edit/profile modal/EditProje
 import AddAchModal from "../components/profile edit/profile modal/AddAchModal";
 import EditAchModal from "../components/profile edit/profile modal/EditAchModal";
 import ProfilePage from "../pages/ProfilePage";
+import UniversityPage from "../pages/UniversityPage";
+import FacultyPage from "../pages/FacultyPage";
 
 export default function ModalLayout() {
   const { action } = useParams();
@@ -21,6 +23,8 @@ export default function ModalLayout() {
       {action == "addach" && <AddAchModal />}
       {action == "editach" && <EditAchModal />}
       {action == "profile" && <ProfilePage />}
+      {action == "univ" && <UniversityPage />}
+      {action == "faculty" && <FacultyPage />}
     </>
   );
 }
