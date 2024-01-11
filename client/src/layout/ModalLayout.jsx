@@ -11,20 +11,20 @@ import UniversityPage from "../pages/UniversityPage";
 import FacultyPage from "../pages/FacultyPage";
 
 export default function ModalLayout() {
-  const { action } = useParams();
-  console.log(action);
+  const { subpage, action } = useParams();
+  console.log(subpage);
   return (
     <>
-      {action == "addabout" && <AboutModal />}
-      {action == "addedu" && <AddEducationModal />}
-      {action == "editedu" && <EditEducationModal />}
-      {action == "addproject" && <AddProjectModal />}
-      {action == "editproject" && <EditProjectModal />}
-      {action == "addach" && <AddAchModal />}
-      {action == "editach" && <EditAchModal />}
-      {action == "profile" && <ProfilePage />}
-      {action == "univ" && <UniversityPage />}
-      {action == "faculty" && <FacultyPage />}
+      {subpage == "addedu" && <AddEducationModal />}
+      {subpage == "editedu" && <EditEducationModal />}
+      {subpage == "addabout" && <AboutModal />}
+      {subpage == "addproject" && <AddProjectModal />}
+      {subpage == "editproject" && <EditProjectModal />}
+      {subpage == "addach" && <AddAchModal />}
+      {subpage == "editach" && <EditAchModal />}
+      {subpage == "profile" && <ProfilePage />}
+      {subpage == "univ" && <UniversityPage />}
+      {subpage == "faculty" && <FacultyPage />}
     </>
   );
 }

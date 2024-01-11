@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
-export default function StudentSearchComponent({ studentData }) {
+export default function StudentSearchComponent({ studentData, owner }) {
+  console.log(owner._id);
   return (
     <>
       <div className="flex flex-col gap-2 overflow-hidden border-b-2 border-primary2/20 p-4">
@@ -9,7 +10,11 @@ export default function StudentSearchComponent({ studentData }) {
           {studentData?.length > 0 ? (
             studentData?.map((student, index) => (
               <Link
-                to={`/user/search/profile/${student?._id}`}
+                to={
+                  owner._id == student._id
+                    ? `/user/profile/${student?._id}/`
+                    : `/user/search/${student?._id}/profile`
+                }
                 key={index}
                 className="flex flex-col  items-center rounded-lg border-2 border-primary2 p-2"
               >

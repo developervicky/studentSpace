@@ -12,7 +12,7 @@ export default function EditAchModal() {
     desc: "",
   });
   const [links, setLink] = useState([{ link: "", linkName: "" }]);
-  const { id } = useParams();
+  const { subid } = useParams();
 
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ export default function EditAchModal() {
   const achUpdate = async (e) => {
     e.preventDefault;
     try {
-      await axios.put(`/api/achUpdate/${id}`, { ach, links }).then(() => {
+      await axios.put(`/api/achUpdate/${subid}`, { ach, links }).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {
@@ -40,7 +40,7 @@ export default function EditAchModal() {
   const deleteAch = async (e) => {
     e.preventDefault;
     try {
-      await axios.delete(`/api/achDelete/${id}`).then(() => {
+      await axios.delete(`/api/achDelete/${subid}`).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {
@@ -52,7 +52,7 @@ export default function EditAchModal() {
     const awardsData = user.awards;
     console.log(awardsData);
     awardsData.map((award) => {
-      if (award._id == id) {
+      if (award._id == subid) {
         let { name, organization, year, desc, links } = award;
 
         setAch({
@@ -71,7 +71,7 @@ export default function EditAchModal() {
         );
       }
     });
-  }, [user.awards, id]);
+  }, [user.awards, subid]);
   return (
     <div
       className="relative z-10"

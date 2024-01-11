@@ -1,13 +1,14 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import StudentSearchComponent from "../components/StudentSearchComponent";
 import UnivSearchComponent from "../components/UnivSearchComponent";
 import FacultySearchComponent from "../components/FacultySearchComponent";
+import { UserContext } from "../components/UserContext";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
-  const [userData, setUserData] = useState([]);
+  const { user } = useContext(UserContext);
   const [studentData, setStudentData] = useState([]);
   const [facultyData, setFacultyData] = useState([]);
   const [universityData, setUniversityData] = useState([]);
@@ -39,9 +40,9 @@ export default function SearchPage() {
           </button>
         </label>
         <div className="flex h-full flex-col rounded-lg border-2 border-primary2 tracking-wide text-white">
-          <StudentSearchComponent studentData={studentData} />
-          <UnivSearchComponent univData={universityData} />
-          <FacultySearchComponent facultyData={facultyData} />
+          <StudentSearchComponent studentData={studentData} owner={user} />
+          <UnivSearchComponent univData={universityData} owner={user} />
+          <FacultySearchComponent facultyData={facultyData} owner={user} />
         </div>
       </div>
     </>

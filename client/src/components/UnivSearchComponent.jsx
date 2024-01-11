@@ -10,7 +10,7 @@ export default function UnivSearchComponent({ univData }) {
           {univData?.length > 0 ? (
             univData?.map((univ, index) => (
               <Link
-                to={`/user/search/univ/${univ?._id}`}
+                to={`/user/search/${univ?._id}/univ`}
                 key={index}
                 className="flex flex-col  items-center rounded-lg border-2 border-primary2 p-2"
               >

@@ -32,21 +32,33 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: ":subpage/",
+        path: ":page/",
         element: <UserLayout />,
       },
       {
-        path: ":subpage/:id",
+        path: ":page/:id",
         element: <UserLayout />,
       },
       {
-        path: ":subpage/:action",
+        path: ":page/:id/:subpage",
         element: <ModalLayout />,
       },
       {
-        path: ":subpage/:action/:id",
+        path: ":page/:id/:subpage/:subid",
         element: <ModalLayout />,
       },
+      // {
+      //   path: ":page/:subpage/:id",
+      //   element: <ModalLayout />,
+      // },
+      // {
+      //   path: ":page/:subpage/:id/:action",
+      //   element: <ModalLayout />,
+      // },
+      // {
+      //   path: ":page/:subpage/:id/:action/:subid",
+      //   element: <ModalLayout />,
+      // },
     ],
   },
 ]);

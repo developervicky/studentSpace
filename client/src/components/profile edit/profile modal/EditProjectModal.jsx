@@ -12,7 +12,8 @@ export default function EditProjectModal() {
     desc: "",
   });
   const [link, setLink] = useState([{ link: "", linkName: "" }]);
-  const { id } = useParams();
+  const { subid } = useParams();
+  console.log(subid);
 
   const navigate = useNavigate();
 
@@ -29,9 +30,11 @@ export default function EditProjectModal() {
   const projectUpdate = async (e) => {
     e.preventDefault;
     try {
-      await axios.put(`/api/projectUpdate/${id}`, { project, link }).then(() => {
-        window.location.href = "/user/profile";
-      });
+      await axios
+        .put(`/api/projectUpdate/${subid}`, { project, link })
+        .then(() => {
+          window.location.href = `/user/profile/${user._id}`;
+        });
     } catch (error) {
       console.log(error);
     }
@@ -40,7 +43,7 @@ export default function EditProjectModal() {
   const deleteProject = async (e) => {
     e.preventDefault;
     try {
-      await axios.delete(`/api/projectDelete/${id}`).then(() => {
+      await axios.delete(`/api/projectDelete/${subid}`).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {
@@ -52,7 +55,7 @@ export default function EditProjectModal() {
     const projectData = user.projects;
     console.log(projectData);
     projectData.map((project) => {
-      if (project._id == id) {
+      if (project._id == subid) {
         let { name, startedYear, endedYear, desc, links } = project;
 
         setProject({
@@ -71,7 +74,7 @@ export default function EditProjectModal() {
         );
       }
     });
-  }, [user.projects, id]);
+  }, [user.projects, subid]);
   return (
     <div
       className="relative z-10"

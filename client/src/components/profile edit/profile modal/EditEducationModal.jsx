@@ -5,7 +5,7 @@ import { UserContext } from "../../UserContext";
 
 export default function EditEducationModal() {
   const { user } = useContext(UserContext);
-  const { id } = useParams();
+  const { subid } = useParams();
 
   const [uni, setUni] = useState({
     name: "",
@@ -20,7 +20,7 @@ export default function EditEducationModal() {
   const eduUpdate = async (e) => {
     e.preventDefault;
     try {
-      await axios.put(`/api/eduUpdate/${id}`, uni).then(() => {
+      await axios.put(`/api/eduUpdate/${subid}`, uni).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {
@@ -31,7 +31,7 @@ export default function EditEducationModal() {
   const deleteEdu = async (e) => {
     e.preventDefault;
     try {
-      await axios.delete(`/api/eduDelete/${id}`).then(() => {
+      await axios.delete(`/api/eduDelete/${subid}`).then(() => {
         window.location.href = "/user/profile";
       });
     } catch (error) {
@@ -42,7 +42,7 @@ export default function EditEducationModal() {
   useEffect(() => {
     const eduData = user.education;
     eduData.map((each) => {
-      if (each._id == id) {
+      if (each._id == subid) {
         let { name, degree, startedYear, endedYear, percentage } = each;
         setUni({
           name,
@@ -53,7 +53,7 @@ export default function EditEducationModal() {
         });
       }
     });
-  }, [id, user.education]);
+  }, [subid, user.education]);
 
   return (
     <div

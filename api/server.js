@@ -298,12 +298,12 @@ app.post("/api/eduCreate", async (req, res) => {
   }
 });
 
-app.put("/api/eduUpdate/:id", async (req, res) => {
+app.put("/api/eduUpdate/:subid", async (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
 
   const { name, degree, startedYear, endedYear, percentage } = req.body;
   const { token } = req.cookies;
-  const { id } = req.params;
+  const { subid } = req.params;
   try {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
       if (err) throw err;
@@ -323,7 +323,7 @@ app.put("/api/eduUpdate/:id", async (req, res) => {
         {
           education: {
             $elemMatch: {
-              _id: id,
+              _id: subid,
             },
           },
         },
@@ -344,11 +344,11 @@ app.put("/api/eduUpdate/:id", async (req, res) => {
   }
 });
 
-app.delete("/api/eduDelete/:id", (req, res) => {
+app.delete("/api/eduDelete/:subid", (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
 
   const { token } = req.cookies;
-  const { id } = req.params;
+  const { subid } = req.params;
 
   try {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
@@ -370,7 +370,7 @@ app.delete("/api/eduDelete/:id", (req, res) => {
         {
           $pull: {
             education: {
-              _id: id,
+              _id: subid,
             },
           },
         }
@@ -438,13 +438,13 @@ app.post("/api/projectCreate", (req, res) => {
   }
 });
 
-app.put("/api/projectUpdate/:id", (req, res) => {
+app.put("/api/projectUpdate/:subid", (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
 
   const { name, startedYear, endedYear, desc } = req.body.project;
   const link = req.body.link;
   const { token } = req.cookies;
-  const { id } = req.params;
+  const { subid } = req.params;
   try {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
       if (err) throw err;
@@ -464,7 +464,7 @@ app.put("/api/projectUpdate/:id", (req, res) => {
         {
           projects: {
             $elemMatch: {
-              _id: id,
+              _id: subid,
             },
           },
         },
@@ -490,11 +490,11 @@ app.put("/api/projectUpdate/:id", (req, res) => {
   }
 });
 
-app.delete("/api/projectDelete/:id", (req, res) => {
+app.delete("/api/projectDelete/:subid", (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
 
   const { token } = req.cookies;
-  const { id } = req.params;
+  const { subid } = req.params;
 
   try {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
@@ -516,7 +516,7 @@ app.delete("/api/projectDelete/:id", (req, res) => {
         {
           $pull: {
             projects: {
-              _id: id,
+              _id: subid,
             },
           },
         }
@@ -577,13 +577,13 @@ app.post("/api/achCreate", (req, res) => {
   }
 });
 
-app.put("/api/achUpdate/:id", (req, res) => {
+app.put("/api/achUpdate/:subid", (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
 
   const { name, year, organization, desc } = req.body.ach;
   const links = req.body.links;
   const { token } = req.cookies;
-  const { id } = req.params;
+  const { subid } = req.params;
   try {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
       if (err) throw err;
@@ -603,7 +603,7 @@ app.put("/api/achUpdate/:id", (req, res) => {
         {
           awards: {
             $elemMatch: {
-              _id: id,
+              _id: subid,
             },
           },
         },
@@ -629,11 +629,11 @@ app.put("/api/achUpdate/:id", (req, res) => {
   }
 });
 
-app.delete("/api/achDelete/:id", (req, res) => {
+app.delete("/api/achDelete/:subid", (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
 
   const { token } = req.cookies;
-  const { id } = req.params;
+  const { subid } = req.params;
 
   try {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
@@ -655,7 +655,7 @@ app.delete("/api/achDelete/:id", (req, res) => {
         {
           $pull: {
             awards: {
-              _id: id,
+              _id: subid,
             },
           },
         }
@@ -798,7 +798,15 @@ app.get("/api/search", async (req, res) => {
 
   const eachStudent = studentUsers.map((student) => {
     const { fname, city, state, country, accType, profilePhoto, _id } = student;
-    Studentusers.push({ fname, city, state, country, accType, profilePhoto, _id });
+    Studentusers.push({
+      fname,
+      city,
+      state,
+      country,
+      accType,
+      profilePhoto,
+      _id,
+    });
   });
   const eachUniversity = universityUsers.map((univ) => {
     const { fname, city, state, country, accType, profilePhoto, _id } = univ;
@@ -806,7 +814,15 @@ app.get("/api/search", async (req, res) => {
   });
   const eachFaculty = facultyUsers.map((faculty) => {
     const { fname, city, state, country, accType, profilePhoto, _id } = faculty;
-    Facultyusers.push({ fname, city, state, country, accType, profilePhoto, _id });
+    Facultyusers.push({
+      fname,
+      city,
+      state,
+      country,
+      accType,
+      profilePhoto,
+      _id,
+    });
   });
   // console.log(eachStudent);
   res.json({ Studentusers, Univusers, Facultyusers });

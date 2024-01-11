@@ -10,7 +10,7 @@ export default function FacultySearchComponent({ facultyData }) {
           {facultyData?.length > 0 ? (
             facultyData?.map((faculty, index) => (
               <Link
-                to={`/user/search/faculty/${faculty?._id}`}
+                to={`/user/search/${faculty?._id}/faculty`}
                 key={index}
                 className="flex flex-col  items-center rounded-lg border-2 border-primary2 p-2"
               >

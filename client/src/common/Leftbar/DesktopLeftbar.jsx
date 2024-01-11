@@ -10,12 +10,12 @@ import { UserContext } from "../../components/UserContext";
 
 export default function DesktopLeftbar({ logout }) {
   const { user } = useContext(UserContext);
-  const { subpage } = useParams();
+  const { page } = useParams();
 
   const hoverClass = (type) => {
     let classes =
       "flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl  tracking-wider text-white  hover:bg-primary ";
-    if (subpage == type) {
+    if (page == type) {
       classes += "bg-primary";
     }
     return classes;

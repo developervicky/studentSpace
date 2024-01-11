@@ -16,11 +16,15 @@ export default function ProfilePage() {
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`/api/profileData/${id}`).then((res) => {
-      console.log(res.data);
-      setUserData(res.data);
-      setLoading(false);
-    });
+    try {
+      axios.get(`/api/profileData/${id}`).then((res) => {
+        console.log(res.data);
+        setUserData(res.data);
+        setLoading(false);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }, [id]);
   return (
     <>
