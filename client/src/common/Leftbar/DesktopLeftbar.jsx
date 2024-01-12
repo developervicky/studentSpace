@@ -37,10 +37,12 @@ export default function DesktopLeftbar({ logout }) {
           <FaUserCircle className="text-2xl" />
           <p>Profile</p>
         </Link>
-        <Link to={"/user/university"} className={hoverClass("university")}>
-          <LiaUniversitySolid className="text-2xl" />
-          <p>University</p>
-        </Link>
+        {user.accType !== "university" && (
+          <Link to={"/user/universities"} className={hoverClass("university")}>
+            <LiaUniversitySolid className="text-2xl" />
+            <p>University</p>
+          </Link>
+        )}
         <Link to={"/user/feed"} className={hoverClass("feed")}>
           <MdOutlineFeed className="text-2xl" />
           <p>Feed/Forum</p>

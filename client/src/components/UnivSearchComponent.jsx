@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function UnivSearchComponent({ univData }) {
+export default function UnivSearchComponent({ univData, owner }) {
   return (
     <>
       <div className="flex flex-col gap-2 overflow-hidden border-b-2 border-primary2/20 p-4">
@@ -10,7 +10,11 @@ export default function UnivSearchComponent({ univData }) {
           {univData?.length > 0 ? (
             univData?.map((univ, index) => (
               <Link
-                to={`/user/search/${univ?._id}/univ`}
+                to={
+                  owner._id == univ._id
+                    ? `/user/profile/${univ?._id}/`
+                    : `/user/search/${univ?._id}/univ`
+                }
                 key={index}
                 className="flex flex-col  items-center rounded-lg border-2 border-primary2 p-2"
               >

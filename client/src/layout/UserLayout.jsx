@@ -3,7 +3,7 @@ import ProfilePage from "../pages/ProfilePage";
 import UniversityPage from "../pages/UniversityPage";
 import SettingsPage from "../pages/SettingsPage";
 import SearchPage from "../pages/SearchPage";
-import FacultyPage from "../pages/FacultyPage";
+import UniversitiesPage from "../pages/UniversitiesPage";
 
 export default function UserLayout() {
   const { page } = useParams();
@@ -11,7 +11,8 @@ export default function UserLayout() {
   return (
     <>
       {page == "profile" && <ProfilePage />}
-      {page == "university" && <UniversityPage />}
+      {page == "universities" && <UniversitiesPage />}
+      {page == "univ" && <UniversityPage />}
       {page == "settings" && <SettingsPage />}
       {page == "search" && <SearchPage />}
     </>

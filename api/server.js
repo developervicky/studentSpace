@@ -781,6 +781,7 @@ app.put("/api/updateData", (req, res) => {
 });
 
 app.get("/api/search", async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
   const { q } = req.query;
   // const keys = [fname, city, state, country];
   let Studentusers = [];
@@ -829,6 +830,7 @@ app.get("/api/search", async (req, res) => {
 });
 
 app.get("/api/profileData/:id", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
   const { token } = req.cookies;
   const { id } = req.params;
   try {
@@ -838,29 +840,6 @@ app.get("/api/profileData/:id", (req, res) => {
       let FacultyUser = await Faculty.findOne({ _id: id });
       let UniversityUser = await University.findOne({ _id: id });
       const userData = StudentUser || FacultyUser || UniversityUser;
-
-      // let userUpdate = Student;
-      // if (userData == FacultyUser) {
-      //   userUpdate = Faculty;
-      // }
-      // if (userData == UniversityUser) {
-      //   userUpdate = University;
-      // }
-      // await userUpdate.updateOne(
-      //   {
-      //     _id: userData._id,
-      //   },
-
-      //   {
-      //     $set: {
-      //       fname,
-      //       userName,
-      //       city,
-      //       state,
-      //       country,
-      //     },
-      //   }
-      // );
       res.json(userData);
     });
   } catch (error) {
@@ -868,3 +847,15 @@ app.get("/api/profileData/:id", (req, res) => {
   }
 });
 app.listen(5000);
+
+app.get("/api/universitiesData", async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+  const uniData = await University.find();
+  res.json(uniData);
+});
+app.get("/api/univ/:id", async (req, res) => {
+  const { id } = req.params;
+  mongoose.connect(process.env.MONGO_URL);
+  const uniData = await University.findOne({ _id: id });
+  res.json(uniData);
+});
