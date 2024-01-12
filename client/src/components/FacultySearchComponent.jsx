@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function FacultySearchComponent({ facultyData }) {
+export default function FacultySearchComponent({ facultyData, owner }) {
   return (
     <>
       <div className="flex flex-col gap-2 overflow-hidden border-b-2 border-primary2/20 p-4">
@@ -10,7 +10,11 @@ export default function FacultySearchComponent({ facultyData }) {
           {facultyData?.length > 0 ? (
             facultyData?.map((faculty, index) => (
               <Link
-                to={`/user/search/${faculty?._id}/faculty`}
+                to={
+                  owner._id == faculty._id
+                    ? `/user/profile/${faculty?._id}/`
+                    : `/user/search/${faculty?._id}/faculty`
+                }
                 key={index}
                 className="flex flex-col  items-center rounded-lg border-2 border-primary2 p-2"
               >

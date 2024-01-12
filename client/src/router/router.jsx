@@ -1,15 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import SignupPage from "../pages/SignupPage";
 import SigninPage from "../pages/SigninPage";
-import ProfilePage from "../pages/ProfilePage";
-import UniversityPage from "../pages/UniversityPage";
+// import ProfilePage from "../pages/ProfilePage";
+// import UniversityPage from "../pages/UniversityPage";
 import axios from "axios";
 import EmailVerify from "../components/EmailVerify";
 import Layout from "../layout/Layout";
 import UserLayout from "../layout/UserLayout";
 import ModalLayout from "../layout/ModalLayout";
-import AboutModal from "../components/profile edit/profile modal/AboutModal";
-import EditEducationModal from "../components/profile edit/profile modal/EditEducationModal";
+// import AboutModal from "../components/profile edit/profile modal/AboutModal";
+// import EditEducationModal from "../components/profile edit/profile modal/EditEducationModal";
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 axios.defaults.withCredentials = true;

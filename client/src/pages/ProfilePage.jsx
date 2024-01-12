@@ -31,14 +31,26 @@ export default function ProfilePage() {
       {loading ? (
         <LoadingPage />
       ) : (
-        id == userData?._id && (
+        id == userData?._id &&
+        (userData?.accType == "university" ? (
+          <div className="my-10 flex w-full flex-col gap-5 text-white">
+            <ProfileAbout user={userData} owner={user} />
+          </div>
+        ) : userData?.accType == "student" ? (
           <div className="my-10 flex w-full flex-col gap-5 text-white">
             <ProfileAbout user={userData} owner={user} />
             <ProfileEducation user={userData} owner={user} />
             <ProfileProject user={userData} owner={user} />
             <ProfileAch user={userData} owner={user} />
           </div>
-        )
+        ) : (
+          <div className="my-10 flex w-full flex-col gap-5 text-white">
+            <ProfileAbout user={userData} owner={user} />
+            <ProfileEducation user={userData} owner={user} />
+            <ProfileProject user={userData} owner={user} />
+            <ProfileAch user={userData} owner={user} />
+          </div>
+        ))
       )}
     </>
   );
