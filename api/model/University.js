@@ -21,6 +21,16 @@ const UniversitySchema = new Schema({
       photos: [String],
     },
   ],
+  courses: [
+    {
+      degName: { type: String },
+      courseName: { type: String },
+      duration: { type: Number },
+      tuitionFee: { type: Number },
+      desc: { type: String },
+      reviews: [{ type: String }],
+    },
+  ],
   connections: { type: Number },
   bio: { type: String },
   city: { type: String },

@@ -8,6 +8,7 @@ import ProfileProject from "../components/profile edit/ProfileProject";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingPage from "./LoadingPage";
+import ProfileUser from "../components/profile edit/ProfileUser";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState();
@@ -34,10 +35,12 @@ export default function ProfilePage() {
         id == userData?._id &&
         (userData?.accType == "university" ? (
           <div className="my-10 flex w-full flex-col gap-5 text-white">
+            {id !== user._id && <ProfileUser user={userData} owner={user} />}
             <ProfileAbout user={userData} owner={user} />
           </div>
         ) : userData?.accType == "student" ? (
           <div className="my-10 flex w-full flex-col gap-5 text-white">
+            {id !== user._id && <ProfileUser user={userData} owner={user} />}
             <ProfileAbout user={userData} owner={user} />
             <ProfileEducation user={userData} owner={user} />
             <ProfileProject user={userData} owner={user} />
@@ -45,6 +48,7 @@ export default function ProfilePage() {
           </div>
         ) : (
           <div className="my-10 flex w-full flex-col gap-5 text-white">
+            {id !== user._id && <ProfileUser user={userData} owner={user} />}
             <ProfileAbout user={userData} owner={user} />
             <ProfileEducation user={userData} owner={user} />
             <ProfileProject user={userData} owner={user} />
