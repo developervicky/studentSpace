@@ -20,12 +20,12 @@ export default function ProfileUser({ user, owner }) {
           </div>
           <div className="font-semibold tracking-wide ">
             <h1 className="text-lg md:text-2xl">{user?.fname}</h1>
-            <p className="text-xs font-light  capitalize">
+            <p className="  font-light  capitalize">
               {user?.accType == "student"
                 ? `${user?.accType} - ${user?.education[0]?.name}`
                 : `${user?.accType}`}
             </p>
-            <p className="text-xs font-light capitalize">
+            <p className=" font-light capitalize">
               {user?.city}, {user?.country}
             </p>
           </div>

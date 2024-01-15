@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../components/UserContext";
-import { MdOutlineEdit } from "react-icons/md";
 import ProfileAbout from "../components/profile edit/ProfileAbout";
 import ProfileEducation from "../components/profile edit/ProfileEducation";
 import ProfileAch from "../components/profile edit/ProfileAch";
