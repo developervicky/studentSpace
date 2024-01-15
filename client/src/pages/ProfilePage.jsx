@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingPage from "./LoadingPage";
 import ProfileUser from "../components/profile edit/ProfileUser";
+import ProfileUni from "../components/profile edit/ProfileUni";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState();
@@ -37,6 +38,7 @@ export default function ProfilePage() {
           <div className="my-10 flex w-full flex-col gap-5 text-white">
             {id !== user._id && <ProfileUser user={userData} owner={user} />}
             <ProfileAbout user={userData} owner={user} />
+            <ProfileUni user={userData} owner={user} />
           </div>
         ) : userData?.accType == "student" ? (
           <div className="my-10 flex w-full flex-col gap-5 text-white">

@@ -25,7 +25,7 @@ const UniversitySchema = new Schema({
     {
       degName: { type: String },
       courseName: { type: String },
-      duration: { type: Number },
+      duration: { type: String },
       tuitionFee: { type: Number },
       desc: { type: String },
       reviews: [{ type: String }],

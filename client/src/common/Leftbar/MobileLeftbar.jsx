@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IconButton, List, Drawer, Card } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import { FaSearch, FaUserCircle } from "react-icons/fa";
 import { LiaUniversitySolid } from "react-icons/lia";
 import { LuNewspaper, LuLogOut } from "react-icons/lu";
 import { MdOutlineFeed } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { IoSettingsOutline } from "react-icons/io5";
+import { UserContext } from "../../components/UserContext";
 
 export default function MobileLeftbar({ logout }) {
+  const { user } = useContext(UserContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const openDrawer = () => setIsDrawerOpen(true);
@@ -26,24 +28,29 @@ export default function MobileLeftbar({ logout }) {
           )}
         </IconButton>
         <div className="flex flex-col gap-14">
-          <Link to={"/user/profile"}>
+          <Link to={"/user/search"}>
+            <FaSearch className="text-2xl text-white" />
+          </Link>
+          <Link to={`/user/profile/${user._id}`}>
             <FaUserCircle className="text-2xl text-white" />
           </Link>
-          <Link to={"/user/university"}>
-            <LiaUniversitySolid className="text-2xl text-white" />
-          </Link>{" "}
-          <Link>
+          {user.accType !== "university" && (
+            <Link to={"/user/university"}>
+              <LiaUniversitySolid className="text-2xl text-white" />
+            </Link>
+          )}
+          <Link to={"/user/feed"}>
             <MdOutlineFeed className="text-2xl text-white" />
-          </Link>{" "}
-          <Link>
+          </Link>
+          <Link to={"/user/blog"}>
             <LuNewspaper className="text-2xl text-white" />
-          </Link>{" "}
-          <Link>
+          </Link>
+          <Link to={"/user/community"}>
             <FaPeopleGroup className="text-2xl text-white" />
           </Link>
         </div>
         <div className="flex flex-col gap-14">
-          <Link>
+          <Link to={"/user/settings"}>
             <IoSettingsOutline className="text-2xl text-white" />
           </Link>{" "}
           <button onClick={logout}>

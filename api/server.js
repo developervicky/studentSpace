@@ -666,6 +666,100 @@ app.delete("/api/achDelete/:subid", (req, res) => {
     res.send(error);
   }
 });
+
+app.post("/api/addCourse", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
+  const { courseName, degName, desc, duration, tuitionFee } = req.body.course;
+  const { token } = req.cookies;
+
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+
+      await University.updateOne(
+        { _id: tokenData.id },
+        {
+          $addToSet: {
+            courses: {
+              courseName,
+              degName,
+              desc,
+              duration,
+              tuitionFee,
+            },
+          },
+        }
+      );
+      res.json("course created");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+app.put("/api/editCourse/:subid", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
+  const { courseName, degName, desc, duration, tuitionFee } = req.body.course;
+  const { token } = req.cookies;
+  const { subid } = req.params;
+
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+
+      await University.updateOne(
+        {
+          courses: {
+            $elemMatch: {
+              _id: subid,
+            },
+          },
+        },
+        {
+          $set: {
+            "courses.$.courseName": courseName,
+            "courses.$.degName": degName,
+            "courses.$.desc": desc,
+            "courses.$.duration": duration,
+            "courses.$.tuitionFee": tuitionFee,
+          },
+        }
+      );
+      res.json("course updated");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.delete("/api/courseDelete/:subid", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
+  const { token } = req.cookies;
+  const { subid } = req.params;
+
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+
+      await University.updateOne(
+        { _id: tokenData.id },
+        {
+          $pull: {
+            courses: {
+              _id: subid,
+            },
+          },
+        }
+      );
+      res.json("course deleted");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 const photoMiddleware = multer({ dest: "/tmp" });
 app.post(
   "/api/upload/profilepic",
