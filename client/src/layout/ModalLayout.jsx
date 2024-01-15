@@ -9,6 +9,8 @@ import EditAchModal from "../components/profile edit/profile modal/EditAchModal"
 import ProfilePage from "../pages/ProfilePage";
 import AddCourseModal from "../components/profile edit/profile modal/AddCourseModal";
 import EditCourseModal from "../components/profile edit/profile modal/EditCourseModal";
+import AddExpModal from "../components/profile edit/profile modal/AddExpModal";
+import EditExpModal from "../components/profile edit/profile modal/EditExpModal";
 // import UniversityPage from "../pages/UniversityPage";
 
 export default function ModalLayout() {
@@ -25,6 +27,8 @@ export default function ModalLayout() {
       {subpage == "editach" && <EditAchModal />}
       {subpage == "addcourses" && <AddCourseModal />}
       {subpage == "editcourse" && <EditCourseModal />}
+      {subpage == "addwork" && <AddExpModal />}
+      {subpage == "editexp" && <EditExpModal />}
       {subpage == "profile" && <ProfilePage />}
       {subpage == "univ" && <ProfilePage />}
       {subpage == "faculty" && <ProfilePage />}

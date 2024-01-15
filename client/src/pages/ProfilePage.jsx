@@ -10,6 +10,7 @@ import axios from "axios";
 import LoadingPage from "./LoadingPage";
 import ProfileUser from "../components/profile edit/ProfileUser";
 import ProfileUni from "../components/profile edit/ProfileUni";
+import ProfileWork from "../components/profile edit/ProfileWork";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState();
@@ -52,6 +53,7 @@ export default function ProfilePage() {
           <div className="my-10 flex w-full flex-col gap-5 text-white">
             {id !== user._id && <ProfileUser user={userData} owner={user} />}
             <ProfileAbout user={userData} owner={user} />
+            <ProfileWork user={userData} owner={user} />
             <ProfileEducation user={userData} owner={user} />
             <ProfileProject user={userData} owner={user} />
             <ProfileAch user={userData} owner={user} />

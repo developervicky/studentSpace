@@ -760,6 +760,120 @@ app.delete("/api/courseDelete/:subid", (req, res) => {
   }
 });
 
+app.post("/api/addExp", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
+  const {
+    compRole,
+    empType,
+    compName,
+    location,
+    startedYear,
+    endedYear,
+    desc,
+  } = req.body.exp;
+  const { token } = req.cookies;
+
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+
+      await Faculty.updateOne(
+        { _id: tokenData.id },
+        {
+          $addToSet: {
+            experiences: {
+              compRole,
+              empType,
+              compName,
+              location,
+              startedYear,
+              endedYear,
+              desc,
+            },
+          },
+        }
+      );
+      res.json("exp created");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.put("/api/editExp/:subid", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
+  const {
+    compRole,
+    empType,
+    compName,
+    location,
+    startedYear,
+    endedYear,
+    desc,
+  } = req.body.exp;
+  const { token } = req.cookies;
+  const { subid } = req.params;
+
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+
+      await Faculty.updateOne(
+        {
+          experiences: {
+            $elemMatch: {
+              _id: subid,
+            },
+          },
+        },
+        {
+          $set: {
+            "experiences.$.compRole": compRole,
+            "experiences.$.empType": empType,
+            "experiences.$.compName": compName,
+            "experiences.$.location": location,
+            "experiences.$.startedYear": startedYear,
+            "experiences.$.endedYear": endedYear,
+            "experiences.$.desc": desc,
+          },
+        }
+      );
+      res.json("experiences updated");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.delete("/api/expDelete/:subid", (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
+  const { token } = req.cookies;
+  const { subid } = req.params;
+
+  try {
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+
+      await Faculty.updateOne(
+        { _id: tokenData.id },
+        {
+          $pull: {
+            experiences: {
+              _id: subid,
+            },
+          },
+        }
+      );
+      res.json("exp deleted");
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 const photoMiddleware = multer({ dest: "/tmp" });
 app.post(
   "/api/upload/profilepic",

@@ -32,9 +32,12 @@ const FacultySchema = new Schema({
   city: { type: String },
   state: { type: String },
   country: { type: String },
-  experience: [
+  experiences: [
     {
+      compRole: { type: String },
+      empType: { type: String },
       compName: { type: String },
+      location: { type: String },
       startedYear: { type: String },
       endedYear: { type: String },
       desc: { type: String },
