@@ -47,7 +47,7 @@ export default function DesktopLeftbar({ logout }) {
           <MdOutlineFeed className="text-2xl" />
           <p>Feed/Forum</p>
         </Link>
-        <Link to={"/user/blog"} className={hoverClass("blog")}>
+        <Link to={"/user/blogs"} className={hoverClass("blog")}>
           <LuNewspaper className="text-2xl" />
           <p>Blog</p>
         </Link>

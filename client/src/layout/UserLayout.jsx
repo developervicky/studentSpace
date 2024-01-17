@@ -4,6 +4,8 @@ import ProfilePage from "../pages/ProfilePage";
 import SettingsPage from "../pages/SettingsPage";
 import SearchPage from "../pages/SearchPage";
 import UniversitiesPage from "../pages/UniversitiesPage";
+import BlogsPage from "../pages/BlogsPage";
+import AddBlogPage from "../pages/AddBlogPage";
 
 export default function UserLayout() {
   const { page } = useParams();
@@ -15,6 +17,8 @@ export default function UserLayout() {
       {page == "univ" && <ProfilePage />}
       {page == "settings" && <SettingsPage />}
       {page == "search" && <SearchPage />}
+      {page == "blogs" && <BlogsPage />}
+      {page == "addblog" && <AddBlogPage />}
     </>
   );
 }

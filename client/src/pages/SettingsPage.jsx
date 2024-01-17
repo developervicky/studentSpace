@@ -54,7 +54,7 @@ export default function SettingsPage() {
 
   return (
     <>
-      <div className="relative my-10 flex grow flex-col justify-between  rounded-lg border-2  border-primary2 p-5 text-white">
+      <div className="relative my-10 flex grow flex-col justify-between  rounded-lg border-2  border-primary2 px-6 py-4 text-white">
         <div className="flex flex-col gap-3 md:gap-10">
           <div>
             <h1 className="text-2xl font-semibold tracking-wide">Settings</h1>

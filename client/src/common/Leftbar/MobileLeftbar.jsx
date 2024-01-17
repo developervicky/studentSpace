@@ -42,7 +42,7 @@ export default function MobileLeftbar({ logout }) {
           <Link to={"/user/feed"}>
             <MdOutlineFeed className="text-2xl text-white" />
           </Link>
-          <Link to={"/user/blog"}>
+          <Link to={"/user/blogs"}>
             <LuNewspaper className="text-2xl text-white" />
           </Link>
           <Link to={"/user/community"}>
