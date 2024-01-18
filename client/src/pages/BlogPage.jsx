@@ -91,7 +91,7 @@ export default function BlogPage() {
           <img
             src={blogData?.cover}
             alt={blogData?.cover}
-            className="h-64 rounded-lg object-cover"
+            className="h-64  rounded-lg object-cover"
           />
         </div>
         <div

@@ -32,13 +32,14 @@ export default function BlogsPage() {
               <Link
                 to={`/user/blogs/${blog._id}/blog`}
                 key={index}
-                className="flex h-fit items-center gap-4 rounded-lg border-2 border-primary3 "
+                className="flex h-fit items-center gap-4 overflow-hidden rounded-lg border-2 border-primary3 "
               >
                 <img
-                  className="h-48 w-80 object-cover"
+                  className="h-48 w-80  object-cover"
                   src={blog.cover}
                   alt={blog.cover}
                 />
+
                 <div className="flex flex-col gap-2 px-4 pr-8">
                   <div>
                     <h1 className="text-lg font-semibold">{blog.title}</h1>
