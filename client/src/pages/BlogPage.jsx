@@ -95,7 +95,7 @@ export default function BlogPage() {
           />
         </div>
         <div
-          className=""
+          className=" flex flex-col items-center text-justify "
           dangerouslySetInnerHTML={{ __html: blogData?.content }}
         ></div>
       </div>
