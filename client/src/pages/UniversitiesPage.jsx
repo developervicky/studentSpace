@@ -27,7 +27,7 @@ export default function UniversityPage() {
                   to={
                     user._id == each._id
                       ? `/user/profile/${each?._id}/`
-                      : `/user/univ/${each?._id}`
+                      : `/user/universities/${each?._id}/univ`
                   }
                   className=" flex flex-col items-center rounded-lg border-2  border-primary3 p-4 tracking-wide"
                   key={index}

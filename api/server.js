@@ -14,6 +14,7 @@ const Student = require("./model/Student");
 const Faculty = require("./model/Faculty");
 const University = require("./model/University");
 const Token = require("./model/Token");
+const Blog = require("./model/Blog");
 const sendEmail = require("./utils/sendEmail.js");
 
 require("dotenv").config();
@@ -1062,8 +1063,79 @@ app.get("/api/universitiesData", async (req, res) => {
   res.json(uniData);
 });
 app.get("/api/univ/:id", async (req, res) => {
-  const { id } = req.params;
   mongoose.connect(process.env.MONGO_URL);
+  const { id } = req.params;
   const uniData = await University.findOne({ _id: id });
   res.json(uniData);
+});
+
+app.post("/api/addblog", photoMiddleware.single("cover"), async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
+  const { title, summary, content, author, ownerID } = req.body;
+
+  const uploadedFiles = [];
+
+  const { path, originalname, mimetype } = req.file;
+  const url = await uploadToS3(path, originalname, mimetype);
+  uploadedFiles.push(url);
+
+  await Blog.create({
+    title,
+    summary,
+    content,
+    author,
+    cover: url,
+    ownerID,
+  });
+
+  res.json("Blog Created");
+});
+
+app.get("/api/blogsData", async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+  const blogsData = await Blog.find();
+  res.json(blogsData);
+});
+
+app.get("/api/blog/:id", async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+  const { id } = req.params;
+  const blogsData = await Blog.findOne({ _id: id });
+  res.json(blogsData);
+});
+
+app.put(
+  "/api/editblog/:id",
+  photoMiddleware.single("cover"),
+  async (req, res) => {
+    const { id } = req.params;
+    const { title, summary, content, author, ownerID } = req.body;
+
+    const uploadedFiles = [];
+
+    const { path, originalname, mimetype } = req.file;
+    const url = await uploadToS3(path, originalname, mimetype);
+    uploadedFiles.push(url);
+
+    await Blog.updateOne(
+      { _id: id },
+      {
+        title,
+        summary,
+        content,
+        author,
+        cover: url,
+        ownerID,
+      }
+    );
+
+    res.json("Blog updated");
+  }
+);
+
+app.delete("/api/deleteblog/:id", async (req, res) => {
+  const { id } = req.params;
+  await Blog.findByIdAndDelete({ _id: id });
+  res.json("Blog Deleted");
 });

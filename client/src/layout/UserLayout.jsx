@@ -19,6 +19,7 @@ export default function UserLayout() {
       {page == "search" && <SearchPage />}
       {page == "blogs" && <BlogsPage />}
       {page == "addblog" && <AddBlogPage />}
+      {page == "editblog" && <AddBlogPage />}
     </>
   );
 }

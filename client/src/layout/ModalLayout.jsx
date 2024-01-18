@@ -11,6 +11,7 @@ import AddCourseModal from "../components/profile edit/profile modal/AddCourseMo
 import EditCourseModal from "../components/profile edit/profile modal/EditCourseModal";
 import AddExpModal from "../components/profile edit/profile modal/AddExpModal";
 import EditExpModal from "../components/profile edit/profile modal/EditExpModal";
+import BlogPage from "../pages/BlogPage";
 // import UniversityPage from "../pages/UniversityPage";
 
 export default function ModalLayout() {
@@ -32,6 +33,7 @@ export default function ModalLayout() {
       {subpage == "profile" && <ProfilePage />}
       {subpage == "univ" && <ProfilePage />}
       {subpage == "faculty" && <ProfilePage />}
+      {subpage == "blog" && <BlogPage />}
     </>
   );
 }

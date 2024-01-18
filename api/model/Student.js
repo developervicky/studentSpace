@@ -9,9 +9,9 @@ const StudentSchema = new Schema({
   agreed: { type: Boolean, required: true },
   accType: { type: String, required: true },
   verified: { type: Boolean, default: false },
-  city: { type: String},
+  city: { type: String },
   state: { type: String },
-  country: { type: String},
+  country: { type: String },
   createdAt: { type: Date, default: Date.now() },
   profilePhoto: [String],
   posts: [

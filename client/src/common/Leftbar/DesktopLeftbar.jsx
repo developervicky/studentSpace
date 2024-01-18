@@ -15,6 +15,8 @@ export default function DesktopLeftbar({ logout }) {
   const hoverClass = (type) => {
     let classes =
       "flex items-center  gap-4 rounded-xl py-4 pl-5 pr-10 text-xl  tracking-wider text-white  hover:bg-primary ";
+    // console.log(page);
+    console.log(type);
     if (page == type) {
       classes += "bg-primary";
     }
@@ -38,7 +40,10 @@ export default function DesktopLeftbar({ logout }) {
           <p>Profile</p>
         </Link>
         {user.accType !== "university" && (
-          <Link to={"/user/universities"} className={hoverClass("university")}>
+          <Link
+            to={"/user/universities"}
+            className={hoverClass("universities")}
+          >
             <LiaUniversitySolid className="text-2xl" />
             <p>University</p>
           </Link>
@@ -47,7 +52,7 @@ export default function DesktopLeftbar({ logout }) {
           <MdOutlineFeed className="text-2xl" />
           <p>Feed/Forum</p>
         </Link>
-        <Link to={"/user/blogs"} className={hoverClass("blog")}>
+        <Link to={"/user/blogs"} className={hoverClass("blogs")}>
           <LuNewspaper className="text-2xl" />
           <p>Blog</p>
         </Link>
