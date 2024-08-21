@@ -35,7 +35,7 @@ export default function MobileLeftbar({ logout }) {
             <FaUserCircle className="text-2xl text-white" />
           </Link>
           {user.accType !== "university" && (
-            <Link to={"/user/university"}>
+            <Link to={"/user/universities"}>
               <LiaUniversitySolid className="text-2xl text-white" />
             </Link>
           )}
