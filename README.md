@@ -16,3 +16,7 @@ The main motivation of this application is to **create the hub and one place for
 - To create the own community for the students, lecturers and other faculties to discuss among themselves.
 - To blog the experience of students/alunmin’s which help the upcoming students to be aware of the specific situation.
 - To enable the Universities create their own portal for their students and also public page where they can post their application process, deadlines, and other announcements.
+
+## Test Account
+- userid: test
+- password: 123456
