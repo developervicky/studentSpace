@@ -25,7 +25,7 @@ export default function SearchPage() {
   console.log(studentData);
   return (
     <>
-      <div className="flex w-full flex-col gap-5  p-10">
+      <div className="flex w-full  flex-col gap-5  py-10">
         <label className=" flex items-center gap-1 rounded-lg border-2 border-primary2 bg-gray-900 p-2">
           <input
             type="search"

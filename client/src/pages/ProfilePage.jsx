@@ -35,7 +35,7 @@ export default function ProfilePage() {
       ) : (
         id == userData?._id &&
         (userData?.accType == "university" ? (
-          <div className="my-10 flex w-full flex-col gap-5 text-white">
+          <div className="my-10 mr-4 flex w-full flex-col gap-5 text-white sm:mr-0">
             {id !== user._id && <ProfileUser user={userData} owner={user} />}
             <ProfileAbout user={userData} owner={user} />
             <ProfileUni user={userData} owner={user} />

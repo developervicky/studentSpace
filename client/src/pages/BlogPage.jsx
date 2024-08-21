@@ -59,7 +59,7 @@ export default function BlogPage() {
 
   return (
     <>
-      <div className="my-10 flex grow flex-col gap-6 rounded-lg border-2 border-primary2 px-6 py-4 tracking-wide text-white">
+      <div className="my-10 mr-4 flex grow flex-col gap-6 rounded-lg border-2 border-primary2 px-6 py-4 tracking-wide text-white sm:mr-0">
         <div className="flex flex-col gap-2">
           <div className="flex flex-row justify-between">
             <div className=" flex flex-col gap-2">

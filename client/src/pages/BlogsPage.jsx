@@ -32,7 +32,7 @@ export default function BlogsPage() {
               <Link
                 to={`/user/blogs/${blog._id}/blog`}
                 key={index}
-                className="flex h-fit items-center gap-4 overflow-hidden rounded-lg border-2 border-primary3 "
+                className="flex h-fit flex-col items-center gap-4 overflow-hidden rounded-lg border-2 border-primary3 py-4 xl:flex-row xl:py-0 "
               >
                 <img
                   className="h-48 w-80  object-cover"

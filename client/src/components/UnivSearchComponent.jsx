@@ -6,7 +6,7 @@ export default function UnivSearchComponent({ univData, owner }) {
     <>
       <div className="flex flex-col gap-2 overflow-hidden border-b-2 border-primary2/20 p-4">
         <h2 className="text-lg ">Universities</h2>
-        <div className="grid grid-cols-5 gap-5">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-5">
           {univData?.length > 0 ? (
             univData?.map((univ, index) => (
               <Link

@@ -18,9 +18,9 @@ export default function UniversityPage() {
   return (
     <>
       {uniData ? (
-        <div className="m-10 flex grow flex-col gap-7 rounded-lg border-2 border-primary2 p-4 text-white">
+        <div className="my-10 flex grow flex-col gap-7 rounded-lg border-2 border-primary2 p-4 text-white">
           <h1 className=" text-xl tracking-wide">Universities</h1>
-          <div className="grid grid-cols-4 gap-4 ">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 ">
             {uniData.map((uni) =>
               uni.map((each, index) => (
                 <Link
