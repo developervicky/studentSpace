@@ -12,14 +12,16 @@ export default function UserLayout() {
   // console.log(subpage);
   return (
     <>
-      {page == "profile" && <ProfilePage />}
-      {page == "universities" && <UniversitiesPage />}
-      {page == "univ" && <ProfilePage />}
-      {page == "settings" && <SettingsPage />}
-      {page == "search" && <SearchPage />}
-      {page == "blogs" && <BlogsPage />}
-      {page == "addblog" && <AddBlogPage />}
-      {page == "editblog" && <AddBlogPage />}
+      <div className="mr-4 flex grow sm:mr-0">
+        {page == "profile" && <ProfilePage />}
+        {page == "universities" && <UniversitiesPage />}
+        {page == "univ" && <ProfilePage />}
+        {page == "settings" && <SettingsPage />}
+        {page == "search" && <SearchPage />}
+        {page == "blogs" && <BlogsPage />}
+        {page == "addblog" && <AddBlogPage />}
+        {page == "editblog" && <AddBlogPage />}
+      </div>
     </>
   );
 }

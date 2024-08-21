@@ -9,7 +9,7 @@ export default function Rightbar() {
   const [modalOn, setModalOn] = useState(false);
   return (
     <>
-      <div className="sticky inset-y-0 left-0  hidden h-screen w-full max-w-[17rem] flex-col items-center justify-around rounded-l-[60px]  bg-primary text-white mobile:flex">
+      <div className="sticky inset-y-0 left-0 hidden h-screen w-full max-w-[17rem] flex-col items-center justify-around rounded-l-[60px]  bg-primary text-white sm:flex">
         <div className="flex flex-col items-center gap-2">
           <div className="relative">
             {user?.profilePhoto?.length > 0 ? (

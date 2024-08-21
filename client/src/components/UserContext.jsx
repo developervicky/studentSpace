@@ -19,7 +19,7 @@ export function UserContextProvider({ children }) {
       });
     }
 
-    // console.log(user);
+    console.log(user);
   }, [user]);
 
   useEffect(() => {

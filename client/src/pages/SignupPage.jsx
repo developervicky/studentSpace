@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import student from "../images/studentvector.png";
 import { Toastify } from "../common/toastify";
 import { UserContext } from "../components/UserContext";
+import student from "../images/studentvector.png";
 import LoadingPage from "./LoadingPage";
 
 export default function SignupPage() {

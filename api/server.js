@@ -184,6 +184,7 @@ app.post("/api/signin", async (req, res) => {
 
 app.get("/api/userData", (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
+  console.log("hey connected to mongoose");
 
   const { token } = req.cookies;
   if (token) {
