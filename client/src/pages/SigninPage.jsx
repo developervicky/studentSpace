@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import student from "../images/studentvector.png";
 import { Toastify } from "../common/toastify";
 import { Navigate } from "react-router-dom";
