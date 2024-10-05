@@ -88,7 +88,7 @@ export default function SigninPage() {
               </button>
               {/* <button className=" rounded-full border-2 bg-white p-2 text-xl md:text-3xl">
                 <FcGoogle />
-              </button> */}
+                </button> */}
             </div>
             <p className=" text-sm tracking-wide md:text-base">
               No account?{" "}
@@ -99,6 +99,11 @@ export default function SigninPage() {
                 Signup
               </span>
             </p>
+            <div className="flex flex-col rounded-xl  bg-gray1 px-4 py-2 text-sm text-gray-500 ">
+              <span>Test User</span>
+              <span>Username: test</span>
+              <span>Password: 123456</span>
+            </div>
           </form>
         </div>
         <div className="hidden text-white  lg:mx-10 lg:my-6 lg:flex lg:h-[800px] lg:w-full lg:flex-col lg:justify-around  lg:rounded-[70px] lg:bg-primary2">
